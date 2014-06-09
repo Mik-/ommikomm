@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ommikomm" />
+		<Option platforms="Unix;" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ommikomm" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add directory="src" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ommikomm" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-s" />
+					<Add option="-DRELEASE" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="`fltk-config --cxxflags`" />
+			<Add option="`pkg-config --cflags libxml++-2.6`" />
+		</Compiler>
+		<Linker>
+			<Add option="`fltk-config --ldstaticflags`" />
+			<Add option="`pkg-config --libs --static libxml++-2.6`" />
+		</Linker>
+		<Unit filename="include/AutopoweroffState.h" />
+		<Unit filename="include/Config.h" />
+		<Unit filename="include/ConfigState.h" />
+		<Unit filename="include/HelpState.h" />
+		<Unit filename="include/IOKCommands.h" />
+		<Unit filename="include/IOKConfig.h" />
+		<Unit filename="include/IOKState.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/NormaleState.h" />
+		<Unit filename="include/OKConfig.h" />
+		<Unit filename="include/OKConfigPersistent.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="src/AutopoweroffState.cpp" />
+		<Unit filename="src/ConfigState.cpp" />
+		<Unit filename="src/HelpState.cpp" />
+		<Unit filename="src/NormaleState.cpp" />
+		<Unit filename="src/OKConfig.cpp" />
+		<Unit filename="src/OKConfigPersistent.cpp" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
