@@ -47,123 +47,13 @@
 #include <AutopoweroffState.h>
 #include <ConfigState.h>
 #include <OKConfig.h>
+#include <OmmiKommTextfield.h>
+#include <OmmiKomm.h>
 
-
-#ifdef DEBUG
-    #define AUTOPOWEROFF 10
-    #define WAITPOWEROFF 5
-    #define WAITCLOSEHELP 5
-#else
-    #define AUTOPOWEROFF 900
-    #define WAITPOWEROFF 10
-    #define WAITCLOSEHELP 30
-#endif
-
-#define RAND 5
 
 using namespace std;
 
-class MyTextfield : public Fl_Multiline_Input, public IOKCommands, public IOKConfigChange {
-    IOKState *currentState;
-    HelpState *helpState;
-    NormaleState *normalState;
-    AutopoweroffState *autopoweroffState;
-    ConfigState *configState;
-    OKConfig *config;
-
-    virtual void clear_all() {
-        static_value("");
-    }
-
-    virtual void poweroff() {
-        string command = "sudo poweroff";
-        #ifndef DEBUG
-        int sysres = system(command.c_str());
-        #endif
-
-        exit(0);
-    }
-
-    virtual Fl_Multiline_Input *getInput(void) {
-        return (this);
-    }
-
-    virtual void setTextLines(int lines) {
-        #ifdef DEBUG
-        cout<<"setTextLines: widget height " << h() << "  line count " << lines <<"\n";
-        #endif
-
-        textsize(h() / (lines * 1.2));
-
-        clear_all();
-    }
-
-    virtual IOKState *getNormalState(void) {
-        return (normalState);
-    }
-
-    virtual IOKState *getAutopoweroffState(void) {
-        return (autopoweroffState);
-    }
-
-    virtual IOKState *getConfigState(void) {
-        return (configState);
-    }
-
-    virtual void configChange() {
-        textfont(config->getFont());
-        color(config->getBackColor());
-        textcolor(config->getTextColor());
-        normalState->setLines(config->getLinecount());
-
-        currentState->enterState();
-    }
-
-public:
-    MyTextfield(int X,int Y,int W,int H,const char* L=0) : Fl_Multiline_Input(X, Y, W, H, L) {
-        type(FL_MULTILINE_INPUT_WRAP);
-
-        config = new OKConfig(this);
-
-        helpState = new HelpState(this, WAITCLOSEHELP);
-        normalState = new NormaleState(this, config->getLinecount(), AUTOPOWEROFF);
-        autopoweroffState = new AutopoweroffState(this, WAITPOWEROFF);
-        configState = new ConfigState(this, config);
-
-        currentState = helpState;
-    }
-
-    virtual void setNewState(IOKState *newState) {
-        currentState = newState;
-        currentState->enterState();
-    }
-
-    virtual IOKState *getHelpState(void) {
-        return (helpState);
-    }
-
-    int handle(int e) {
-      switch(e) {
-        case FL_KEYDOWN : {
-            int key = Fl::event_key();
-
-            int ret = currentState->handleKey(key);
-
-            if (ret > 0) {
-                return (ret);
-            }
-        }
-      }
-
-      return (Fl_Multiline_Input::handle(e));
-    }
-
-    void tick(void) {
-        currentState->tick();
-    }
-};
-
-MyTextfield *input;
+OmmiKommTextfield *input;
 
 void timercallback(void *data)
  {
@@ -175,7 +65,7 @@ int main (int argc, char ** argv)
 {
   Fl_Window *window;
   window = new Fl_Window (Fl::w(), Fl::h());
-  input = new MyTextfield (RAND, RAND, Fl::w()-2*RAND, Fl::h()-2*RAND, "");
+  input = new OmmiKommTextfield (RAND, RAND, Fl::w()-2*RAND, Fl::h()-2*RAND, "");
 
   window->end ();
   window->show (argc, argv);

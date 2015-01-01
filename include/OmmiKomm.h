@@ -1,5 +1,5 @@
 /*
-    (C) 2014 by Michael Neuendorf <michael@neuendorf-online.de>
+    (C) 2015 by Michael Neuendorf <michael@neuendorf-online.de>
 
     This file is part of OmmiKomm.
 
@@ -32,24 +32,15 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOKCOMMANDS_H
-#define IOKCOMMANDS_H
+#ifdef DEBUG
+    #define AUTOPOWEROFF 10
+    #define WAITPOWEROFF 5
+    #define WAITCLOSEHELP 5
+#else
+    #define AUTOPOWEROFF 900
+    #define WAITPOWEROFF 10
+    #define WAITCLOSEHELP 30
+#endif
 
-#include <FL/Fl_Multiline_Input.H>
-#include <IOKState.h>
+#define RAND 5
 
-class IOKCommands
-{
-    public:
-        virtual void clear_all(void) = 0;
-        virtual void poweroff(void)  = 0;
-        virtual Fl_Multiline_Input *getInput(void) = 0;
-        virtual void setTextLines(int lines) = 0;
-        virtual void setNewState(IOKState *newState) = 0;
-        virtual IOKState *getNormalState(void) = 0;
-        virtual IOKState *getHelpState(void) = 0;
-        virtual IOKState *getAutopoweroffState(void) = 0;
-        virtual IOKState *getConfigState(void) = 0;
-};
-
-#endif // IOKCOMMANDS_H
