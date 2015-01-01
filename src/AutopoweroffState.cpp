@@ -32,7 +32,7 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include "AutopoweroffState.h"
+#include <AutopoweroffState.h>
 
 using namespace std;
 
@@ -40,6 +40,7 @@ AutopoweroffState::AutopoweroffState(IOKCommands *Commands, int waitForShutdown)
 {
     this->Commands = Commands;
     this->waitForShutdown = waitForShutdown;
+    this->ticks = 0;
 }
 
 AutopoweroffState::~AutopoweroffState()

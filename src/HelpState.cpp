@@ -38,6 +38,7 @@ HelpState::HelpState(IOKCommands *Commands, int waitForAutoClose)
 {
     this->Commands = Commands;
     this->waitForAutoClose = waitForAutoClose;
+    this->ticks = 0;
 }
 
 HelpState::~HelpState()
@@ -60,7 +61,7 @@ void HelpState::enterState(void) {
         "(c) 2014 Michael Neuendorf\n"
         "\n"
         "F1 - diese Hilfe\n"
-        "F10 Einstellungen\n"
+        "F10 - Einstellungen\n"
         "ESC - Eingabe löschen\n"
         "F12 - OmmiKomm ausschalten\n"
         "\n"

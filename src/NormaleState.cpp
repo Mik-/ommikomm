@@ -80,8 +80,8 @@ void NormaleState::enterState(void) {
 
 void NormaleState::tick(void) {
     ticks++;
-    if (ticks >= waitForAutopoweroff) {
-        Commands->setNewState(Commands->getAutopoweroffState());
-    }
+//    if (ticks >= waitForAutopoweroff) {
+//        Commands->setNewState(Commands->getAutopoweroffState());
+//    }
 }
 
