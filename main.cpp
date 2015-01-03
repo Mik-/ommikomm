@@ -41,7 +41,7 @@
 #include <sstream>
 #include <libintl.h>
 
-#include "src/config.h"
+#include "config.h"
 #include "src/AutopoweroffState.h"
 #include "src/IOKState.h"
 #include "src/IOKCommands.h"
@@ -62,8 +62,8 @@ void timercallback(void *data) {
 }
 
 int main(int argc, char ** argv) {
-    setlocale (LC_ALL, "");
-    bindtextdomain(PACKAGE, LOCALEDIR);
+    setlocale(LC_ALL, "de_DE.UTF-8");
+    bindtextdomain(PACKAGE, "/usr/local/share/locale");
     textdomain(PACKAGE);
 
     Fl_Window *window;
