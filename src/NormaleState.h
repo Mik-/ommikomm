@@ -32,44 +32,29 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OKCONFIG_H
-#define OKCONFIG_H
+#ifndef NORMALESTATE_H
+#define NORMALESTATE_H
 
-#include <FL/Enumerations.H>
-#include <Config.h>
-#include <IOKConfig.h>
-
-class IOKConfigChange {
-    public:
-        virtual void configChange() = 0;
-};
+#include "IOKState.h"
+#include "IOKCommands.h"
 
 
-class OKConfig : public IOKConfig
+class NormaleState : public IOKState
 {
     public:
-        OKConfig(IOKConfigChange *changeCallback);
-        virtual ~OKConfig();
+        NormaleState(IOKCommands *Commands, int lines, int waitForAutopoweroff);
+        virtual ~NormaleState();
 
-        virtual void toggleContrast(void);
-        virtual int getContrastIndex();
-        void setContrastIndex(int contrast);
-        int getBackColor(void);
-        int getTextColor(void);
-        virtual void toggleFont(void);
-        virtual int getFontIndex();
-        void setFontIndex(int font);
-        int getFont(void);
-        virtual void toggleLinecount();
-        virtual int getLinecountIndex();
-        void setLinecountIntdex(int linecount);
-        int getLinecount();
+        void setLines(int lines);
     protected:
+        virtual int handleKey(int key);
+        virtual void enterState(void);
+        virtual void tick(void);
     private:
-        int contrast;
-        int font;
-        int linecount;
-        IOKConfigChange *changeCallback;
+        IOKCommands *Commands;
+        int lines;
+        int waitForAutopoweroff;
+        int ticks;
 };
 
-#endif // OKCONFIG_H
+#endif // NORMALESTATE_H

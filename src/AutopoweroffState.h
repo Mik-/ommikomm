@@ -1,5 +1,5 @@
 /*
-    (C) 2015 by Michael Neuendorf <michael@neuendorf-online.de>
+    (C) 2014 by Michael Neuendorf <michael@neuendorf-online.de>
 
     This file is part of OmmiKomm.
 
@@ -32,15 +32,29 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifdef DEBUG
-    #define AUTOPOWEROFF 10
-    #define WAITPOWEROFF 5
-    #define WAITCLOSEHELP 5
-#else
-    #define AUTOPOWEROFF 900
-    #define WAITPOWEROFF 10
-    #define WAITCLOSEHELP 30
-#endif
+#ifndef AUTOPOWEROFFSTATE_H
+#define AUTOPOWEROFFSTATE_H
 
-#define RAND 5
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
 
+#include "IOKState.h"
+#include "IOKCommands.h"
+
+class AutopoweroffState : public IOKState
+{
+    public:
+        AutopoweroffState(IOKCommands *Commands, int waitForShutdown);
+        virtual ~AutopoweroffState();
+    protected:
+        virtual int handleKey(int key);
+        virtual void enterState(void);
+        virtual void tick(void);
+    private:
+        IOKCommands *Commands;
+        int waitForShutdown;
+        int ticks;
+};
+
+#endif // AUTOPOWEROFFSTATE_H

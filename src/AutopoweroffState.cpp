@@ -32,7 +32,7 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include <AutopoweroffState.h>
+#include "AutopoweroffState.h"
 
 using namespace std;
 

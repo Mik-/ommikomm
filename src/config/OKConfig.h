@@ -32,49 +32,45 @@
  erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
 
-#include <FL/Fl.H>
+#ifndef OKCONFIG_H
+#define OKCONFIG_H
+
 #include <FL/Enumerations.H>
-#include <FL/Fl_Window.H>
-#include <FL/Fl_Multiline_Input.H>
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <libintl.h>
+#include "Config.h"
+#include "IOKConfig.h"
 
-#include "src/AutopoweroffState.h"
-#include "src/IOKState.h"
-#include "src/IOKCommands.h"
-#include "src/NormaleState.h"
-#include "src/OmmiKomm.h"
-#include "src/help/HelpState.h"
-#include "src/config/ConfigState.h"
-#include "src/config/OKConfig.h"
-#include "src/textfield/OmmiKommTextfield.h"
+class IOKConfigChange {
+    public:
+        virtual void configChange() = 0;
+};
 
-using namespace std;
+class OKConfig : public IOKConfig {
+    public:
+        OKConfig(IOKConfigChange *changeCallback);
+        virtual ~OKConfig();
 
-OmmiKommTextfield *input;
+        virtual void toggleContrast(void);
+        virtual int getContrastIndex();
+        void setContrastIndex(int contrast);
+        int getBackColor(void);
+        int getTextColor(void);
+        virtual void toggleFont(void);
+        virtual int getFontIndex();
+        void setFontIndex(int font);
+        int getFont(void);
+        virtual void toggleLinecount();
+        virtual int getLinecountIndex();
+        void setLinecountIntdex(int linecount);
+        int getLinecount();
+        int getCharacterCaseIndex();
+        void setCharacterCaseIndex(int characterCaseIndex);
+    protected:
+    private:
+        int contrast;
+        int font;
+        int linecount;
+        IOKConfigChange *changeCallback;
+        int characterCaseIndex;
+};
 
-void timercallback(void *data) {
-    input->tick();
-    Fl::repeat_timeout(1.0, timercallback);
-}
-
-int main(int argc, char ** argv) {
-    textdomain("ommikomm");
-    bindtextdomain("ommikomm", "/home/michael/src/pi/ommikomm_pi/bin");
-
-    Fl_Window *window;
-    window = new Fl_Window(Fl::w(), Fl::h());
-    input = new OmmiKommTextfield(RAND, RAND, Fl::w() - 2 * RAND,
-            Fl::h() - 2 * RAND, "");
-
-    window->end();
-    window->show(argc, argv);
-
-    Fl::add_timeout(1.0, timercallback);
-
-    input->setNewState(input->getHelpState());
-
-    return (Fl::run());
-}
+#endif // OKCONFIG_H

@@ -32,46 +32,20 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include "HelpState.h"
+#ifndef IOKCONFIG_H
+#define IOKCONFIG_H
 
-HelpState::HelpState(IOKCommands *Commands, int waitForAutoClose)
+
+class IOKConfig
 {
-    this->Commands = Commands;
-    this->waitForAutoClose = waitForAutoClose;
-    this->ticks = 0;
-}
+    public:
+        virtual void toggleContrast() = 0;
+        virtual int getContrastIndex() = 0;
+        virtual void toggleFont() = 0;
+        virtual int getFontIndex() = 0;
+        virtual void toggleLinecount() = 0;
+        virtual int getLinecountIndex() = 0;
+        virtual int getCharacterCaseIndex() = 0;
+};
 
-HelpState::~HelpState()
-{
-    //dtor
-}
-
-
-int HelpState::handleKey(int key)
-{
-    Commands->setNewState(this->Commands->getNormalState());
-    return (1);
-}
-
-void HelpState::enterState(void) {
-    ticks = 0;
-    Commands->setTextLines(9);
-    Commands->getInput()->value(
-        "OmmiKomm v1.1\n"
-        "(c) 2014 Michael Neuendorf\n"
-        "\n"
-        "F1 - diese Hilfe\n"
-        "F10 - Einstellungen\n"
-        "ESC - Eingabe löschen\n"
-        "F12 - OmmiKomm ausschalten\n"
-        "\n"
-        "Taste drücken");
-}
-
-void HelpState::tick(void) {
-    ticks++;
-
-    if (ticks >= waitForAutoClose) {
-        Commands->setNewState(this->Commands->getNormalState());
-    }
-}
+#endif // IOKCONFIG_H

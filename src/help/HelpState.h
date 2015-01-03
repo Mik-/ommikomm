@@ -32,23 +32,25 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OKCONFIGPERSISTENT_H
-#define OKCONFIGPERSISTENT_H
+#ifndef HELPSTATE_H
+#define HELPSTATE_H
 
-#include <OKConfig.h>
-#include <string>
+#include "../IOKState.h"
+#include "../IOKCommands.h"
 
-
-class OKConfigPersistent
+class HelpState : public IOKState
 {
     public:
-        OKConfigPersistent(OKConfig *config);
-
-        void Write(std::string filename);
-        void Read(std::string filename);
+        HelpState(IOKCommands *Commands, int waitForAutoClose);
+        virtual ~HelpState();
     protected:
+        virtual int handleKey(int key);
+        virtual void enterState(void);
+        virtual void tick(void);
     private:
-        OKConfig *config;
+        IOKCommands *Commands;
+        int waitForAutoClose;
+        int ticks;
 };
 
-#endif // OKCONFIGPERSISTENT_H
+#endif // HELPSTATE_H

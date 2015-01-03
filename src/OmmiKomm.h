@@ -1,5 +1,5 @@
 /*
-    (C) 2014 by Michael Neuendorf <michael@neuendorf-online.de>
+    (C) 2015 by Michael Neuendorf <michael@neuendorf-online.de>
 
     This file is part of OmmiKomm.
 
@@ -32,19 +32,20 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOKCONFIG_H
-#define IOKCONFIG_H
+#ifdef DEBUG
+    #define AUTOPOWEROFF 10
+    #define WAITPOWEROFF 5
+    #define WAITCLOSEHELP 5
+#else
+    #define AUTOPOWEROFF 900
+    #define WAITPOWEROFF 10
+    #define WAITCLOSEHELP 30
+#endif
 
+#define RAND 5
 
-class IOKConfig
-{
-    public:
-        virtual void toggleContrast() = 0;
-        virtual int getContrastIndex() = 0;
-        virtual void toggleFont() = 0;
-        virtual int getFontIndex() = 0;
-        virtual void toggleLinecount() = 0;
-        virtual int getLinecountIndex() = 0;
-};
+#define _(String) gettext (String)
 
-#endif // IOKCONFIG_H
+#define OMMIKOMMVERSION "v2.0"
+#define COPYRIGHTYEAR "2015"
+

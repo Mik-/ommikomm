@@ -32,30 +32,24 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef AUTOPOWEROFFSTATE_H
-#define AUTOPOWEROFFSTATE_H
+#ifndef OKCONFIGPERSISTENT_H
+#define OKCONFIGPERSISTENT_H
 
-#include <IOKState.h>
-#include <IOKCommands.h>
+#include <string>
 
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
+#include "OKConfig.h"
 
 
-class AutopoweroffState : public IOKState
+class OKConfigPersistent
 {
     public:
-        AutopoweroffState(IOKCommands *Commands, int waitForShutdown);
-        virtual ~AutopoweroffState();
+        OKConfigPersistent(OKConfig *config);
+
+        void Write(std::string filename);
+        void Read(std::string filename);
     protected:
-        virtual int handleKey(int key);
-        virtual void enterState(void);
-        virtual void tick(void);
     private:
-        IOKCommands *Commands;
-        int waitForShutdown;
-        int ticks;
+        OKConfig *config;
 };
 
-#endif // AUTOPOWEROFFSTATE_H
+#endif // OKCONFIGPERSISTENT_H

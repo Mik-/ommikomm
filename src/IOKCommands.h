@@ -32,29 +32,25 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NORMALESTATE_H
-#define NORMALESTATE_H
+#ifndef IOKCOMMANDS_H
+#define IOKCOMMANDS_H
 
-#include <IOKState.h>
-#include <IOKCommands.h>
+#include <FL/Fl_Multiline_Input.H>
 
+#include "IOKState.h"
 
-class NormaleState : public IOKState
+class IOKCommands
 {
     public:
-        NormaleState(IOKCommands *Commands, int lines, int waitForAutopoweroff);
-        virtual ~NormaleState();
-
-        void setLines(int lines);
-    protected:
-        virtual int handleKey(int key);
-        virtual void enterState(void);
-        virtual void tick(void);
-    private:
-        IOKCommands *Commands;
-        int lines;
-        int waitForAutopoweroff;
-        int ticks;
+        virtual void clear_all(void) = 0;
+        virtual void poweroff(void)  = 0;
+        virtual Fl_Multiline_Input *getInput(void) = 0;
+        virtual void setTextLines(int lines) = 0;
+        virtual void setNewState(IOKState *newState) = 0;
+        virtual IOKState *getNormalState(void) = 0;
+        virtual IOKState *getHelpState(void) = 0;
+        virtual IOKState *getAutopoweroffState(void) = 0;
+        virtual IOKState *getConfigState(void) = 0;
 };
 
-#endif // NORMALESTATE_H
+#endif // IOKCOMMANDS_H

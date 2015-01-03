@@ -1,5 +1,5 @@
 /*
-    (C) 2014 by Michael Neuendorf <michael@neuendorf-online.de>
+    (C) 2015 by Michael Neuendorf <michael@neuendorf-online.de>
 
     This file is part of OmmiKomm.
 
@@ -32,26 +32,44 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONFIGSTATE_H
-#define CONFIGSTATE_H
+#ifndef OMMIKOMMTEXTFIELD_H_
+#define OMMIKOMMTEXTFIELD_H_
 
-#include <IOKState.h>
-#include <IOKCommands.h>
-#include <IOKConfig.h>
+#include <FL/Fl.H>
+#include <FL/Enumerations.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Multiline_Input.H>
 
+#include "../IOKCommands.h"
+#include "../NormaleState.h"
+#include "../AutopoweroffState.h"
+#include "../help/HelpState.h"
+#include "../config/OKConfig.h"
+#include "../config/ConfigState.h"
 
-class ConfigState : public IOKState
-{
-    public:
-        ConfigState(IOKCommands *Commands, IOKConfig *Config);
-        virtual ~ConfigState();
-    protected:
-        virtual int handleKey(int key);
-        virtual void enterState(void);
-        virtual void tick(void);
-    private:
-        IOKCommands *Commands;
-        IOKConfig *Config;
+class OmmiKommTextfield : public Fl_Multiline_Input, public IOKCommands, public IOKConfigChange {
+    IOKState *currentState;
+    HelpState *helpState;
+    NormaleState *normalState;
+    AutopoweroffState *autopoweroffState;
+    ConfigState *configState;
+    OKConfig *config;
+
+    virtual void clear_all();
+    virtual void poweroff();
+    virtual Fl_Multiline_Input *getInput(void);
+    virtual void setTextLines(int lines);
+    virtual IOKState *getNormalState(void);
+    virtual IOKState *getAutopoweroffState(void);
+    virtual IOKState *getConfigState(void);
+    virtual void configChange();
+public:
+    OmmiKommTextfield(int X,int Y,int W,int H,const char* L);
+
+    virtual void setNewState(IOKState *newState);
+    virtual IOKState *getHelpState(void);
+    int handle(int e);
+    void tick(void);
 };
 
-#endif // CONFIGSTATE_H
+#endif /* OMMIKOMMTEXTFIELD_H_ */

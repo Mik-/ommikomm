@@ -32,88 +32,50 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include "OKConfig.h"
+#include <libintl.h>
+#include <sstream>
+#include "../OmmiKomm.h"
+#include "HelpState.h"
 
-OKConfig::OKConfig(IOKConfigChange *changeCallback)
+HelpState::HelpState(IOKCommands *Commands, int waitForAutoClose)
 {
-    this->changeCallback = changeCallback;
-
-    contrast = 0;
-    font = 0;
-    linecount = 0;
+    this->Commands = Commands;
+    this->waitForAutoClose = waitForAutoClose;
+    this->ticks = 0;
 }
 
-OKConfig::~OKConfig()
+HelpState::~HelpState()
 {
     //dtor
 }
 
-void OKConfig::toggleContrast() {
-    if (++contrast >= maxContrasts) {
-        contrast = 0;
-    }
-
-    changeCallback->configChange();
-}
-
-int OKConfig::getContrastIndex() {
-    return (contrast);
-}
-
-int OKConfig::getFontIndex() {
-    return (font);
-}
-
-int OKConfig::getBackColor() {
-    return (Contrasts[contrast].backColor);
-}
-
-int OKConfig::getTextColor(){
-    return (Contrasts[contrast].textColor);
-}
-
-void OKConfig::toggleFont() {
-    if (++font >= maxFonts) {
-        font = 0;
-    }
-
-    changeCallback->configChange();
-}
-
-int OKConfig::getFont() {
-    return (Fonts[font]);
-}
-
-void OKConfig::toggleLinecount() {
-    if (++linecount >= maxLinecounts) {
-        linecount = 0;
-    }
-
-    changeCallback->configChange();
-}
-
-int OKConfig::getLinecountIndex() {
-    return (linecount);
-}
-
-int OKConfig::getLinecount() {
-    return (Linecounts[linecount]);
-}
-
-void OKConfig::setFontIndex(int font)
+int HelpState::handleKey(int key)
 {
-    this->font = font;
+    Commands->setNewState(this->Commands->getNormalState());
+    return (1);
 }
 
-void OKConfig::setContrastIndex(int contrast)
-{
-    this->contrast = contrast;
+void HelpState::enterState(void) {
+    std::ostringstream helpText;
+
+    ticks = 0;
+    Commands->setTextLines(9);
+
+    helpText << "OmmiKomm " << OMMIKOMMVERSION << "\n";
+    helpText << "(c) " << COPYRIGHTYEAR << " Michael Neuendorf\n\n";
+    helpText << "ESC - " << _("Clear input") << "\n";
+    helpText << "F1  - " << _("This help screen") << "\n";
+    helpText << "F10 - " << _("Setup") << "\n";
+    helpText << "F12 - " << _("Restart OmmiKomm") << "\n";
+    helpText << "\n" << _("Press space bar to go back");
+
+    Commands->getInput()->value(helpText.str().c_str());
 }
 
-void OKConfig::setLinecountIntdex(int linecount)
-{
-    this->linecount = linecount;
+void HelpState::tick(void) {
+    ticks++;
+
+    if (ticks >= waitForAutoClose) {
+        Commands->setNewState(this->Commands->getNormalState());
+    }
 }
-
-
-

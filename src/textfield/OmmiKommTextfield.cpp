@@ -41,15 +41,15 @@
 #include <iostream>
 #include <sstream>
 
-#include <OmmiKomm.h>
-#include <OmmiKommTextfield.h>
+#include "../AutopoweroffState.h"
+#include "../IOKCommands.h"
+#include "../NormaleState.h"
+#include "../OmmiKomm.h"
+#include "../help/HelpState.h"
+#include "../config/ConfigState.h"
+#include "../config/OKConfig.h"
 
-#include <IOKCommands.h>
-#include <HelpState.h>
-#include <NormaleState.h>
-#include <AutopoweroffState.h>
-#include <ConfigState.h>
-#include <OKConfig.h>
+#include "OmmiKommTextfield.h"
 
 
 OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) :
@@ -114,10 +114,6 @@ Fl_Multiline_Input *OmmiKommTextfield::getInput(void) {
 }
 
 void OmmiKommTextfield::setTextLines(int lines) {
-    #ifdef DEBUG
-    cout<<"setTextLines: widget height " << h() << "  line count " << lines <<"\n";
-    #endif
-
     textsize(h() / (lines * 1.2));
 
     clear_all();

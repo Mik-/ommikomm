@@ -32,26 +32,61 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef HELPSTATE_H
-#define HELPSTATE_H
+#include <libintl.h>
+#include <sstream>
 
-#include <IOKState.h>
-#include <IOKCommands.h>
+#include "../AutopoweroffState.h"
+#include "../OmmiKomm.h"
+#include "ConfigState.h"
 
-
-class HelpState : public IOKState
+ConfigState::ConfigState(IOKCommands *Commands, IOKConfig *Config)
 {
-    public:
-        HelpState(IOKCommands *Commands, int waitForAutoClose);
-        virtual ~HelpState();
-    protected:
-        virtual int handleKey(int key);
-        virtual void enterState(void);
-        virtual void tick(void);
-    private:
-        IOKCommands *Commands;
-        int waitForAutoClose;
-        int ticks;
-};
+    this->Commands = Commands;
+    this->Config = Config;
+}
 
-#endif // HELPSTATE_H
+ConfigState::~ConfigState()
+{
+    //dtor
+}
+
+int ConfigState::handleKey(int key) {
+    if (key == FL_F+3) {
+        Config->toggleContrast();
+        return(1);
+    }
+    if (key == FL_F+4) {
+        Config->toggleFont();
+        return(1);
+    }
+    if (key == FL_F+5) {
+        Config->toggleLinecount();
+        return(1);
+    }
+
+    Commands->setNewState(Commands->getNormalState());
+    return (1);
+}
+
+void ConfigState::enterState(void) {
+    std::ostringstream menuText;
+
+    Commands->setTextLines(7);
+    Commands->clear_all();
+
+    menuText << _("Setup") << "\n\n";
+
+    menuText << "F3 - " << _("Contrast") << ": " << Config->getContrastIndex() + 1 << "\n";
+    menuText << "F4 - " << _("Typeface") << ": " << Config->getFontIndex() + 1 << "\n";
+    menuText << "F5 - " << _("Number of lines") << ": " << Config->getLinecountIndex() + 1 << "\n";
+    menuText << "F6 - " << _("Character case") << ": " << Config->getLinecountIndex() + 1 << "\n";
+
+    menuText << "\n" << _("Press space bar to go back");
+
+    Commands->getInput()->value(menuText.str().c_str());
+}
+
+void ConfigState::tick(void) {
+    // nothing to do
+}
+

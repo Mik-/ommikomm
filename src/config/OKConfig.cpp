@@ -32,65 +32,97 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include "ConfigState.h"
-#include "AutopoweroffState.h"
+#include "OKConfig.h"
 
-ConfigState::ConfigState(IOKCommands *Commands, IOKConfig *Config)
+OKConfig::OKConfig(IOKConfigChange *changeCallback)
 {
-    this->Commands = Commands;
-    this->Config = Config;
+    this->changeCallback = changeCallback;
+
+    contrast = 0;
+    font = 0;
+    linecount = 0;
+    characterCaseIndex = 0;
 }
 
-ConfigState::~ConfigState()
+OKConfig::~OKConfig()
 {
     //dtor
 }
 
-int ConfigState::handleKey(int key) {
-    if (key == FL_F+3) {
-        Config->toggleContrast();
-        return(1);
-    }
-    if (key == FL_F+4) {
-        Config->toggleFont();
-        return(1);
-    }
-    if (key == FL_F+5) {
-        Config->toggleLinecount();
-        return(1);
+void OKConfig::toggleContrast() {
+    if (++contrast >= maxContrasts) {
+        contrast = 0;
     }
 
-    Commands->setNewState(Commands->getNormalState());
-    return (1);
+    changeCallback->configChange();
 }
 
-void ConfigState::enterState(void) {
-    std::string menuText;
-
-    Commands->setTextLines(7);
-    Commands->clear_all();
-
-    menuText = "Einstellungen\n"
-        "\n";
-
-    std::ostringstream contrast_zahl;
-    contrast_zahl << Config->getContrastIndex() + 1;
-    menuText += "F3 - Kontrast " + contrast_zahl.str() + "\n";
-
-    std::ostringstream font_zahl ;
-    font_zahl << Config->getFontIndex() + 1;
-    menuText += "F4 - Schriftart " + font_zahl.str() + "\n";
-
-    std::ostringstream linecount_zahl ;
-    linecount_zahl << Config->getLinecountIndex() + 1;
-    menuText += "F5 - Zeilenzahl " + linecount_zahl.str() + "\n";
-
-    menuText += "\nTaste drücken";
-
-    Commands->getInput()->value(menuText.c_str());
+int OKConfig::getContrastIndex() {
+    return (contrast);
 }
 
-void ConfigState::tick(void) {
-    // nothing to do
+int OKConfig::getFontIndex() {
+    return (font);
+}
+
+int OKConfig::getBackColor() {
+    return (Contrasts[contrast].backColor);
+}
+
+int OKConfig::getTextColor(){
+    return (Contrasts[contrast].textColor);
+}
+
+void OKConfig::toggleFont() {
+    if (++font >= maxFonts) {
+        font = 0;
+    }
+
+    changeCallback->configChange();
+}
+
+int OKConfig::getFont() {
+    return (Fonts[font]);
+}
+
+void OKConfig::toggleLinecount() {
+    if (++linecount >= maxLinecounts) {
+        linecount = 0;
+    }
+
+    changeCallback->configChange();
+}
+
+int OKConfig::getLinecountIndex() {
+    return (linecount);
+}
+
+int OKConfig::getLinecount() {
+    return (Linecounts[linecount]);
+}
+
+void OKConfig::setFontIndex(int font)
+{
+    this->font = font;
+}
+
+void OKConfig::setContrastIndex(int contrast)
+{
+    this->contrast = contrast;
+}
+
+void OKConfig::setLinecountIntdex(int linecount)
+{
+    this->linecount = linecount;
+}
+
+int OKConfig::getCharacterCaseIndex()
+{
+    return (characterCaseIndex);
+}
+
+void OKConfig::setCharacterCaseIndex(int characterCaseIndex)
+{
+    this->characterCaseIndex = characterCaseIndex;
 }
 
