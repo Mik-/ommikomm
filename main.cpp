@@ -41,6 +41,7 @@
 #include <sstream>
 #include <libintl.h>
 
+#include "src/config.h"
 #include "src/AutopoweroffState.h"
 #include "src/IOKState.h"
 #include "src/IOKCommands.h"
@@ -61,8 +62,9 @@ void timercallback(void *data) {
 }
 
 int main(int argc, char ** argv) {
-    textdomain("ommikomm");
-    bindtextdomain("ommikomm", "/home/michael/src/pi/ommikomm_pi/bin");
+    setlocale (LC_ALL, "");
+    bindtextdomain(PACKAGE, LOCALEDIR);
+    textdomain(PACKAGE);
 
     Fl_Window *window;
     window = new Fl_Window(Fl::w(), Fl::h());
