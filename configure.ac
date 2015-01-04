@@ -7,6 +7,8 @@ AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([main.cpp])
 AC_CONFIG_HEADERS([config.h])
 
+AM_GNU_GETTEXT([external])
+
 # Checks for programs.
 AC_PROG_AWK
 AC_PROG_CXX
@@ -23,5 +25,5 @@ AC_CHECK_HEADERS([libintl.h])
 # Checks for library functions.
 AC_CHECK_FUNCS([setlocale])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile po/Makefile.in])
 AC_OUTPUT

@@ -1,0 +1,7 @@
+./src/AutopoweroffState.cpp
+./src/config/ConfigState.cpp
+./src/config/OKConfig.cpp
+./src/config/OKConfigPersistent.cpp
+./src/help/HelpState.cpp
+./src/NormaleState.cpp
+./src/textfield/OmmiKommTextfield.cpp

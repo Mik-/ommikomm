@@ -62,9 +62,11 @@ void timercallback(void *data) {
 }
 
 int main(int argc, char ** argv) {
-    setlocale(LC_ALL, "de_DE.UTF-8");
-    bindtextdomain(PACKAGE, "/usr/local/share/locale");
+    setlocale(LC_ALL, "");
+    bindtextdomain(PACKAGE, LOCALEDIR);
     textdomain(PACKAGE);
+
+cout << LOCALEDIR << "\n";
 
     Fl_Window *window;
     window = new Fl_Window(Fl::w(), Fl::h());

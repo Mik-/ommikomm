@@ -1,54 +1,54 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Michael Neuendorf
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# German translation for OmmiKomm.
+# Copyright (C) 2015 Michael Neuendorf
+# This file is distributed under the same license as the ommikomm package.
+# Michael Neuendorf <michael@neuendorf-online.de>, 2015.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ommikomm 2.0\n"
 "Report-Msgid-Bugs-To: michael@neuendorf-online.de\n"
 "POT-Creation-Date: 2015-01-04 10:45+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2015-01-04 11:32+0100\n"
+"Last-Translator: Michael Neuendorf <michael@neuendorf-online.de>\n"
+"Language-Team: German <michael@neuendorf-online.de>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: src/config/ConfigState.cpp:77 src/help/HelpState.cpp:68
 msgid "Setup"
-msgstr ""
+msgstr "Einstellungen"
 
 #: src/config/ConfigState.cpp:79
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
 #: src/config/ConfigState.cpp:80
 msgid "Typeface"
-msgstr ""
+msgstr "Schriftart"
 
 #: src/config/ConfigState.cpp:81
 msgid "Number of lines"
-msgstr ""
+msgstr "Zeilenzahl"
 
 #: src/config/ConfigState.cpp:82
 msgid "Character case"
-msgstr ""
+msgstr "Groß-/Kleinschreibung"
 
 #: src/config/ConfigState.cpp:84 src/help/HelpState.cpp:70
 msgid "Press space bar to go back"
-msgstr ""
+msgstr "Leertaste für Zurück"
 
 #: src/help/HelpState.cpp:66
 msgid "Clear input"
-msgstr ""
+msgstr "Eingabe löschen"
 
 #: src/help/HelpState.cpp:67
 msgid "This help screen"
-msgstr ""
+msgstr "Diese Hilfeseite"
 
 #: src/help/HelpState.cpp:69
 msgid "Restart OmmiKomm"
-msgstr ""
+msgstr "OmmiKomm neu starten"
