@@ -41,7 +41,7 @@
 #include <FL/Fl_Multiline_Input.H>
 
 #include "../IOKCommands.h"
-#include "../NormaleState.h"
+#include "../TypingState.h"
 #include "../AutopoweroffState.h"
 #include "../help/HelpState.h"
 #include "../config/OKConfig.h"
@@ -50,7 +50,7 @@
 class OmmiKommTextfield : public Fl_Multiline_Input, public IOKCommands, public IOKConfigChange {
     IOKState *currentState;
     HelpState *helpState;
-    NormaleState *normalState;
+    TypingState *typingState;
     AutopoweroffState *autopoweroffState;
     ConfigState *configState;
     OKConfig *config;
@@ -59,7 +59,7 @@ class OmmiKommTextfield : public Fl_Multiline_Input, public IOKCommands, public 
     virtual void poweroff();
     virtual Fl_Multiline_Input *getInput(void);
     virtual void setTextLines(int lines);
-    virtual IOKState *getNormalState(void);
+    virtual IOKState *getTypingState(void);
     virtual IOKState *getAutopoweroffState(void);
     virtual IOKState *getConfigState(void);
     virtual void configChange();

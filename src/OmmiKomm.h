@@ -46,6 +46,5 @@
 
 #define _(String) gettext (String)
 
-#define OMMIKOMMVERSION "v2.0"
 #define COPYRIGHTYEAR "2015"
 

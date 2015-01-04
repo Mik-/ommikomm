@@ -49,7 +49,7 @@ AutopoweroffState::~AutopoweroffState()
 }
 
 int AutopoweroffState::handleKey(int key) {
-    Commands->setNewState(Commands->getNormalState());
+    Commands->setNewState(Commands->getTypingState());
     return (1);
 }
 

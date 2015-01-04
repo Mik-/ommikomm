@@ -47,7 +47,7 @@ class IOKCommands
         virtual Fl_Multiline_Input *getInput(void) = 0;
         virtual void setTextLines(int lines) = 0;
         virtual void setNewState(IOKState *newState) = 0;
-        virtual IOKState *getNormalState(void) = 0;
+        virtual IOKState *getTypingState(void) = 0;
         virtual IOKState *getHelpState(void) = 0;
         virtual IOKState *getAutopoweroffState(void) = 0;
         virtual IOKState *getConfigState(void) = 0;

@@ -32,56 +32,28 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include "NormaleState.h"
+#ifndef TYPINGSTATE_H
+#define TYPINGSTATE_H
 
-NormaleState::NormaleState(IOKCommands *Commands, int lines, int waitForAutopoweroff)
+#include "IOKState.h"
+#include "IOKCommands.h"
+
+class TypingState : public IOKState
 {
-    this->Commands = Commands;
-    this->lines = lines;
-    this->waitForAutopoweroff = waitForAutopoweroff;
-}
+    public:
+        TypingState(IOKCommands *Commands, int lines, int waitForAutopoweroff);
+        virtual ~TypingState();
 
-NormaleState::~NormaleState()
-{
-    //dtor
-}
+        void setLines(int lines);
+    protected:
+        virtual int handleKey(int key);
+        virtual void enterState(void);
+        virtual void tick(void);
+    private:
+        IOKCommands *Commands;
+        int lines;
+        int waitForAutopoweroff;
+        int ticks;
+};
 
-void NormaleState::setLines(int lines) {
-    this->lines = lines;
-}
-
-int NormaleState::handleKey(int key){
-    ticks = 0;
-
-    if (key == FL_F+1) {
-        Commands->setNewState(Commands->getHelpState());
-        return(1);
-    }
-    if (key == FL_F+10) {
-        Commands->setNewState(Commands->getConfigState());
-        return(1);
-    }
-    if (key == FL_Escape or key == FL_F+5) {
-        Commands->clear_all();
-        return (1);
-    }
-    if (key == FL_F+12) {
-        Commands->setNewState(Commands->getAutopoweroffState());
-        return (1);
-    }
-
-    return (0);
-}
-
-void NormaleState::enterState(void) {
-    ticks = 0;
-    Commands->setTextLines(lines);
-}
-
-void NormaleState::tick(void) {
-    ticks++;
-//    if (ticks >= waitForAutopoweroff) {
-//        Commands->setNewState(Commands->getAutopoweroffState());
-//    }
-}
-
+#endif // TYPINGSTATE_H

@@ -4,8 +4,8 @@
 AC_PREREQ([2.69])
 AC_INIT([ommikomm], [2.0], [michael@neuendorf-online.de])
 AM_INIT_AUTOMAKE
-AC_CONFIG_SRCDIR([main.cpp])
-AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_SRCDIR([src/main.cpp])
+AC_CONFIG_HEADERS([src/config.h])
 
 AM_GNU_GETTEXT([external])
 

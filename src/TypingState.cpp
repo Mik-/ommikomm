@@ -32,42 +32,56 @@
  erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OKCONFIG_H
-#define OKCONFIG_H
+#include <string>
+#include "TypingState.h"
 
-#include <FL/Enumerations.H>
-#include "Config.h"
-#include "IOKConfig.h"
+TypingState::TypingState(IOKCommands *Commands, int lines,
+		int waitForAutopoweroff) {
+	this->Commands = Commands;
+	this->lines = lines;
+	this->waitForAutopoweroff = waitForAutopoweroff;
+}
 
-class IOKConfigChange {
-    public:
-        virtual void configChange() = 0;
-};
+TypingState::~TypingState() {
+	//dtor
+}
 
-class OKConfig : public IOKConfig {
-    public:
-        OKConfig(IOKConfigChange *changeCallback);
-        virtual ~OKConfig();
+void TypingState::setLines(int lines) {
+	this->lines = lines;
+}
 
-        virtual void toggleContrast(void);
-        virtual int getContrastIndex();
-        void setContrastIndex(int contrast);
-        int getBackColor(void);
-        int getTextColor(void);
-        virtual void toggleFont(void);
-        virtual int getFontIndex();
-        void setFontIndex(int font);
-        int getFont(void);
-        virtual void toggleLinecount();
-        virtual int getLinecountIndex();
-        void setLinecountIntdex(int linecount);
-        int getLinecount();
-    protected:
-    private:
-        int contrast;
-        int font;
-        int linecount;
-        IOKConfigChange *changeCallback;
-};
+int TypingState::handleKey(int key) {
+	ticks = 0;
 
-#endif // OKCONFIG_H
+	if (key == FL_F + 1) {
+		Commands->setNewState(Commands->getHelpState());
+		return (1);
+	}
+	if (key == FL_F + 10) {
+		Commands->setNewState(Commands->getConfigState());
+		return (1);
+	}
+	if (key == FL_Escape or key == FL_F + 5) {
+		Commands->clear_all();
+		return (1);
+	}
+	if (key == FL_F + 12) {
+		Commands->setNewState(Commands->getAutopoweroffState());
+		return (1);
+	}
+
+	return (0);
+}
+
+void TypingState::enterState(void) {
+	ticks = 0;
+	Commands->setTextLines(lines);
+}
+
+void TypingState::tick(void) {
+	ticks++;
+//    if (ticks >= waitForAutopoweroff) {
+//        Commands->setNewState(Commands->getAutopoweroffState());
+//    }
+}
+

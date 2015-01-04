@@ -35,6 +35,7 @@
 #include <libintl.h>
 #include <sstream>
 #include "../OmmiKomm.h"
+#include "../config.h"
 #include "HelpState.h"
 
 HelpState::HelpState(IOKCommands *Commands, int waitForAutoClose)
@@ -51,7 +52,7 @@ HelpState::~HelpState()
 
 int HelpState::handleKey(int key)
 {
-    Commands->setNewState(this->Commands->getNormalState());
+    Commands->setNewState(this->Commands->getTypingState());
     return (1);
 }
 
@@ -61,7 +62,7 @@ void HelpState::enterState(void) {
     ticks = 0;
     Commands->setTextLines(9);
 
-    helpText << "OmmiKomm " << OMMIKOMMVERSION << "\n";
+    helpText << "OmmiKomm " << VERSION << "\n";
     helpText << "(c) " << COPYRIGHTYEAR << " Michael Neuendorf\n\n";
     helpText << "ESC - " << _("Clear input") << "\n";
     helpText << "F1  - " << _("This help screen") << "\n";
@@ -76,6 +77,6 @@ void HelpState::tick(void) {
     ticks++;
 
     if (ticks >= waitForAutoClose) {
-        Commands->setNewState(this->Commands->getNormalState());
+        Commands->setNewState(this->Commands->getTypingState());
     }
 }

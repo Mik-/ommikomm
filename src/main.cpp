@@ -42,15 +42,15 @@
 #include <libintl.h>
 
 #include "config.h"
-#include "src/AutopoweroffState.h"
-#include "src/IOKState.h"
-#include "src/IOKCommands.h"
-#include "src/NormaleState.h"
-#include "src/OmmiKomm.h"
-#include "src/help/HelpState.h"
-#include "src/config/ConfigState.h"
-#include "src/config/OKConfig.h"
-#include "src/textfield/OmmiKommTextfield.h"
+#include "AutopoweroffState.h"
+#include "IOKState.h"
+#include "IOKCommands.h"
+#include "OmmiKomm.h"
+#include "help/HelpState.h"
+#include "config/ConfigState.h"
+#include "config/OKConfig.h"
+#include "textfield/OmmiKommTextfield.h"
+#include "TypingState.h"
 
 using namespace std;
 

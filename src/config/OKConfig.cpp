@@ -41,7 +41,6 @@ OKConfig::OKConfig(IOKConfigChange *changeCallback)
     contrast = 0;
     font = 0;
     linecount = 0;
-    characterCaseIndex = 0;
 }
 
 OKConfig::~OKConfig()
@@ -115,14 +114,3 @@ void OKConfig::setLinecountIntdex(int linecount)
 {
     this->linecount = linecount;
 }
-
-int OKConfig::getCharacterCaseIndex()
-{
-    return (characterCaseIndex);
-}
-
-void OKConfig::setCharacterCaseIndex(int characterCaseIndex)
-{
-    this->characterCaseIndex = characterCaseIndex;
-}
-

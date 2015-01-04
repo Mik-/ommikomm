@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ommikomm 2.0\n"
 "Report-Msgid-Bugs-To: michael@neuendorf-online.de\n"
-"POT-Creation-Date: 2015-01-04 10:45+0100\n"
+"POT-Creation-Date: 2015-01-04 20:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/config/ConfigState.cpp:77 src/help/HelpState.cpp:68
+#: src/config/ConfigState.cpp:77 src/help/HelpState.cpp:69
 msgid "Setup"
 msgstr ""
 
@@ -33,22 +33,18 @@ msgstr ""
 msgid "Number of lines"
 msgstr ""
 
-#: src/config/ConfigState.cpp:82
-msgid "Character case"
-msgstr ""
-
-#: src/config/ConfigState.cpp:84 src/help/HelpState.cpp:70
+#: src/config/ConfigState.cpp:83 src/help/HelpState.cpp:71
 msgid "Press space bar to go back"
 msgstr ""
 
-#: src/help/HelpState.cpp:66
+#: src/help/HelpState.cpp:67
 msgid "Clear input"
 msgstr ""
 
-#: src/help/HelpState.cpp:67
+#: src/help/HelpState.cpp:68
 msgid "This help screen"
 msgstr ""
 
-#: src/help/HelpState.cpp:69
+#: src/help/HelpState.cpp:70
 msgid "Restart OmmiKomm"
 msgstr ""

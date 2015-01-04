@@ -1,5 +1,5 @@
 /*
-    (C) 2014 by Michael Neuendorf <michael@neuendorf-online.de>
+    (C) 2015 by Michael Neuendorf <michael@neuendorf-online.de>
 
     This file is part of OmmiKomm.
 
@@ -64,14 +64,14 @@ int ConfigState::handleKey(int key) {
         return(1);
     }
 
-    Commands->setNewState(Commands->getNormalState());
+    Commands->setNewState(Commands->getTypingState());
     return (1);
 }
 
 void ConfigState::enterState(void) {
     std::ostringstream menuText;
 
-    Commands->setTextLines(7);
+    Commands->setTextLines(8);
     Commands->clear_all();
 
     menuText << _("Setup") << "\n\n";
@@ -79,7 +79,6 @@ void ConfigState::enterState(void) {
     menuText << "F3 - " << _("Contrast") << ": " << Config->getContrastIndex() + 1 << "\n";
     menuText << "F4 - " << _("Typeface") << ": " << Config->getFontIndex() + 1 << "\n";
     menuText << "F5 - " << _("Number of lines") << ": " << Config->getLinecountIndex() + 1 << "\n";
-    menuText << "F6 - " << _("Character case") << ": " << Config->getLinecountIndex() + 1 << "\n";
 
     menuText << "\n" << _("Press space bar to go back");
 

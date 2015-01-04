@@ -3,5 +3,6 @@
 ./src/config/OKConfig.cpp
 ./src/config/OKConfigPersistent.cpp
 ./src/help/HelpState.cpp
-./src/NormaleState.cpp
+./src/main.cpp
 ./src/textfield/OmmiKommTextfield.cpp
+./src/TypingState.cpp

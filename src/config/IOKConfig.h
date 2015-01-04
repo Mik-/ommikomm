@@ -45,7 +45,6 @@ class IOKConfig
         virtual int getFontIndex() = 0;
         virtual void toggleLinecount() = 0;
         virtual int getLinecountIndex() = 0;
-        virtual int getCharacterCaseIndex() = 0;
 };
 
 #endif // IOKCONFIG_H

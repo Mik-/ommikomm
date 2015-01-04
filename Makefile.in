@@ -83,8 +83,9 @@ subdir = .
 DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in ABOUT-NLS depcomp COPYING compile \
-	config.guess config.rpath config.sub install-sh missing
+	$(top_srcdir)/src/config.h.in ABOUT-NLS depcomp COPYING \
+	compile config.guess config.rpath config.sub install-sh \
+	missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
 	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/lib-ld.m4 \
@@ -96,14 +97,14 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER = config.h
+CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_ommikomm_OBJECTS = ommikomm-main.$(OBJEXT) \
-	src/ommikomm-NormaleState.$(OBJEXT) \
+am_ommikomm_OBJECTS = src/ommikomm-main.$(OBJEXT) \
+	src/ommikomm-TypingState.$(OBJEXT) \
 	src/ommikomm-AutopoweroffState.$(OBJEXT) \
 	src/config/ommikomm-ConfigState.$(OBJEXT) \
 	src/config/ommikomm-OKConfig.$(OBJEXT) \
@@ -125,7 +126,7 @@ AM_V_at = $(am__v_at_@AM_V@)
 am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
 am__v_at_1 = 
-DEFAULT_INCLUDES = -I.@am__isrc@
+DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
@@ -169,8 +170,7 @@ am__recursive_targets = \
   $(am__extra_recursive_targets)
 AM_RECURSIVE_TARGETS = $(am__recursive_targets:-recursive=) TAGS CTAGS \
 	cscope distdir dist dist-all distcheck
-am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) \
-	$(LISP)config.h.in
+am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
 # *not* preserved.
@@ -356,15 +356,14 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ommikomm_SOURCES = main.cpp src/NormaleState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
 SUBDIRS = . po
 AUTOMAKE_OPTIONS = subdir-objects 
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = config.rpath
-all: config.h
-	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .cpp .o .obj
@@ -403,20 +402,20 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
 
-config.h: stamp-h1
-	@test -f $@ || rm -f stamp-h1
-	@test -f $@ || $(MAKE) $(AM_MAKEFLAGS) stamp-h1
+src/config.h: src/stamp-h1
+	@test -f $@ || rm -f src/stamp-h1
+	@test -f $@ || $(MAKE) $(AM_MAKEFLAGS) src/stamp-h1
 
-stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
-	@rm -f stamp-h1
-	cd $(top_builddir) && $(SHELL) ./config.status config.h
-$(srcdir)/config.h.in:  $(am__configure_deps) 
+src/stamp-h1: $(top_srcdir)/src/config.h.in $(top_builddir)/config.status
+	@rm -f src/stamp-h1
+	cd $(top_builddir) && $(SHELL) ./config.status src/config.h
+$(top_srcdir)/src/config.h.in:  $(am__configure_deps) 
 	($(am__cd) $(top_srcdir) && $(AUTOHEADER))
-	rm -f stamp-h1
+	rm -f src/stamp-h1
 	touch $@
 
 distclean-hdr:
-	-rm -f config.h stamp-h1
+	-rm -f src/config.h src/stamp-h1
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
@@ -465,7 +464,9 @@ src/$(am__dirstamp):
 src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
-src/ommikomm-NormaleState.$(OBJEXT): src/$(am__dirstamp) \
+src/ommikomm-main.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+src/ommikomm-TypingState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ommikomm-AutopoweroffState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
@@ -514,9 +515,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ommikomm-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-AutopoweroffState.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-NormaleState.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-TypingState.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/ommikomm-ConfigState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/ommikomm-OKConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Po@am__quote@
@@ -539,33 +540,33 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-ommikomm-main.o: main.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ommikomm-main.o -MD -MP -MF $(DEPDIR)/ommikomm-main.Tpo -c -o ommikomm-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ommikomm-main.Tpo $(DEPDIR)/ommikomm-main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cpp' object='ommikomm-main.o' libtool=no @AMDEPBACKSLASH@
+src/ommikomm-main.o: src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-main.o -MD -MP -MF src/$(DEPDIR)/ommikomm-main.Tpo -c -o src/ommikomm-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-main.Tpo src/$(DEPDIR)/ommikomm-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/ommikomm-main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ommikomm-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
 
-ommikomm-main.obj: main.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ommikomm-main.obj -MD -MP -MF $(DEPDIR)/ommikomm-main.Tpo -c -o ommikomm-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ommikomm-main.Tpo $(DEPDIR)/ommikomm-main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cpp' object='ommikomm-main.obj' libtool=no @AMDEPBACKSLASH@
+src/ommikomm-main.obj: src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-main.obj -MD -MP -MF src/$(DEPDIR)/ommikomm-main.Tpo -c -o src/ommikomm-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-main.Tpo src/$(DEPDIR)/ommikomm-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/ommikomm-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ommikomm-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
 
-src/ommikomm-NormaleState.o: src/NormaleState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-NormaleState.o -MD -MP -MF src/$(DEPDIR)/ommikomm-NormaleState.Tpo -c -o src/ommikomm-NormaleState.o `test -f 'src/NormaleState.cpp' || echo '$(srcdir)/'`src/NormaleState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-NormaleState.Tpo src/$(DEPDIR)/ommikomm-NormaleState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/NormaleState.cpp' object='src/ommikomm-NormaleState.o' libtool=no @AMDEPBACKSLASH@
+src/ommikomm-TypingState.o: src/TypingState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-TypingState.o -MD -MP -MF src/$(DEPDIR)/ommikomm-TypingState.Tpo -c -o src/ommikomm-TypingState.o `test -f 'src/TypingState.cpp' || echo '$(srcdir)/'`src/TypingState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-TypingState.Tpo src/$(DEPDIR)/ommikomm-TypingState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/TypingState.cpp' object='src/ommikomm-TypingState.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-NormaleState.o `test -f 'src/NormaleState.cpp' || echo '$(srcdir)/'`src/NormaleState.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-TypingState.o `test -f 'src/TypingState.cpp' || echo '$(srcdir)/'`src/TypingState.cpp
 
-src/ommikomm-NormaleState.obj: src/NormaleState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-NormaleState.obj -MD -MP -MF src/$(DEPDIR)/ommikomm-NormaleState.Tpo -c -o src/ommikomm-NormaleState.obj `if test -f 'src/NormaleState.cpp'; then $(CYGPATH_W) 'src/NormaleState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/NormaleState.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-NormaleState.Tpo src/$(DEPDIR)/ommikomm-NormaleState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/NormaleState.cpp' object='src/ommikomm-NormaleState.obj' libtool=no @AMDEPBACKSLASH@
+src/ommikomm-TypingState.obj: src/TypingState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-TypingState.obj -MD -MP -MF src/$(DEPDIR)/ommikomm-TypingState.Tpo -c -o src/ommikomm-TypingState.obj `if test -f 'src/TypingState.cpp'; then $(CYGPATH_W) 'src/TypingState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/TypingState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-TypingState.Tpo src/$(DEPDIR)/ommikomm-TypingState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/TypingState.cpp' object='src/ommikomm-TypingState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-NormaleState.obj `if test -f 'src/NormaleState.cpp'; then $(CYGPATH_W) 'src/NormaleState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/NormaleState.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-TypingState.obj `if test -f 'src/TypingState.cpp'; then $(CYGPATH_W) 'src/TypingState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/TypingState.cpp'; fi`
 
 src/ommikomm-AutopoweroffState.o: src/AutopoweroffState.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-AutopoweroffState.o -MD -MP -MF src/$(DEPDIR)/ommikomm-AutopoweroffState.Tpo -c -o src/ommikomm-AutopoweroffState.o `test -f 'src/AutopoweroffState.cpp' || echo '$(srcdir)/'`src/AutopoweroffState.cpp
@@ -947,7 +948,7 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(PROGRAMS) config.h
+all-am: Makefile $(PROGRAMS)
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(bindir)"; do \
@@ -997,7 +998,7 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf ./$(DEPDIR) src/$(DEPDIR) src/config/$(DEPDIR) src/help/$(DEPDIR) src/textfield/$(DEPDIR)
+	-rm -rf src/$(DEPDIR) src/config/$(DEPDIR) src/help/$(DEPDIR) src/textfield/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -1045,7 +1046,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf ./$(DEPDIR) src/$(DEPDIR) src/config/$(DEPDIR) src/help/$(DEPDIR) src/textfield/$(DEPDIR)
+	-rm -rf src/$(DEPDIR) src/config/$(DEPDIR) src/help/$(DEPDIR) src/textfield/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -1063,7 +1064,7 @@ ps-am:
 
 uninstall-am: uninstall-binPROGRAMS
 
-.MAKE: $(am__recursive_targets) all install-am install-strip
+.MAKE: $(am__recursive_targets) install-am install-strip
 
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
 	am--refresh check check-am clean clean-binPROGRAMS \

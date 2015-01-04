@@ -585,7 +585,7 @@ PACKAGE_STRING='ommikomm 2.0'
 PACKAGE_BUGREPORT='michael@neuendorf-online.de'
 PACKAGE_URL=''
 
-ac_unique_file="main.cpp"
+ac_unique_file="src/main.cpp"
 gt_needs=
 # Factoring default headers for most tests.
 ac_includes_default="\
@@ -2865,7 +2865,7 @@ END
   fi
 fi
 
-ac_config_headers="$ac_config_headers config.h"
+ac_config_headers="$ac_config_headers src/config.h"
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for a sed that does not truncate output" >&5
@@ -7929,7 +7929,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
+    "src/config.h") CONFIG_HEADERS="$CONFIG_HEADERS src/config.h" ;;
     "po-directories") CONFIG_COMMANDS="$CONFIG_COMMANDS po-directories" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;

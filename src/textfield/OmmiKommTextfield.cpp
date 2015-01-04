@@ -43,13 +43,13 @@
 
 #include "../AutopoweroffState.h"
 #include "../IOKCommands.h"
-#include "../NormaleState.h"
 #include "../OmmiKomm.h"
 #include "../help/HelpState.h"
 #include "../config/ConfigState.h"
 #include "../config/OKConfig.h"
 
 #include "OmmiKommTextfield.h"
+#include "../TypingState.h"
 
 
 OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) :
@@ -60,7 +60,7 @@ OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) 
   config = new OKConfig(this);
 
   helpState = new HelpState(this, WAITCLOSEHELP);
-  normalState = new NormaleState(this, config->getLinecount(), AUTOPOWEROFF);
+  typingState = new TypingState(this, config->getLinecount(), AUTOPOWEROFF);
   autopoweroffState = new AutopoweroffState(this, WAITPOWEROFF);
   configState = new ConfigState(this, config);
 
@@ -119,8 +119,8 @@ void OmmiKommTextfield::setTextLines(int lines) {
     clear_all();
 }
 
-IOKState *OmmiKommTextfield::getNormalState(void) {
-    return (normalState);
+IOKState *OmmiKommTextfield::getTypingState(void) {
+    return (typingState);
 }
 
 IOKState *OmmiKommTextfield::getAutopoweroffState(void) {
@@ -135,7 +135,7 @@ void OmmiKommTextfield::configChange() {
     textfont(config->getFont());
     color(config->getBackColor());
     textcolor(config->getTextColor());
-    normalState->setLines(config->getLinecount());
+    typingState->setLines(config->getLinecount());
 
     currentState->enterState();
 }
