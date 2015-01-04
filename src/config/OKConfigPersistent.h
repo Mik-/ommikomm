@@ -37,19 +37,22 @@
 
 #include <string>
 
-#include "OKConfig.h"
+#include "IOKConfig.h"
 
 
 class OKConfigPersistent
 {
     public:
-        OKConfigPersistent(OKConfig *config);
+        OKConfigPersistent(IOKConfig *config);
 
-        void Write(std::string filename);
-        void Read(std::string filename);
+        void write(std::string filename);
+        void read(std::string filename);
     protected:
     private:
-        OKConfig *config;
+        IOKConfig *config;
+
+        bool fileExists(std::string filename);
+        const char *getHomeDir();
 };
 
 #endif // OKCONFIGPERSISTENT_H

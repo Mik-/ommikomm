@@ -47,6 +47,7 @@
 #include "../help/HelpState.h"
 #include "../config/ConfigState.h"
 #include "../config/OKConfig.h"
+#include "../config/OKConfigPersistent.h"
 
 #include "OmmiKommTextfield.h"
 #include "../TypingState.h"
@@ -58,6 +59,9 @@ OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) 
   type (FL_MULTILINE_INPUT_WRAP);
 
   config = new OKConfig(this);
+
+  OKConfigPersistent configReader(config);
+  configReader.read(CONFIGFILENAME);
 
   helpState = new HelpState(this, WAITCLOSEHELP);
   typingState = new TypingState(this, config->getLinecount(), AUTOPOWEROFF);

@@ -41,10 +41,13 @@ class IOKConfig
     public:
         virtual void toggleContrast() = 0;
         virtual int getContrastIndex() = 0;
+        virtual void setContrastIndex(int contrast) = 0;
         virtual void toggleFont() = 0;
         virtual int getFontIndex() = 0;
+        virtual void setFontIndex(int font) = 0;
         virtual void toggleLinecount() = 0;
         virtual int getLinecountIndex() = 0;
+        virtual void setLinecountIntdex(int linecount) = 0;
 };
 
 #endif // IOKCONFIG_H

@@ -66,12 +66,10 @@ int main(int argc, char ** argv) {
     bindtextdomain(PACKAGE, LOCALEDIR);
     textdomain(PACKAGE);
 
-cout << LOCALEDIR << "\n";
-
     Fl_Window *window;
     window = new Fl_Window(Fl::w(), Fl::h());
-    input = new OmmiKommTextfield(RAND, RAND, Fl::w() - 2 * RAND,
-            Fl::h() - 2 * RAND, "");
+    input = new OmmiKommTextfield(BORDERWIDTH, BORDERWIDTH, Fl::w() - 2 * BORDERWIDTH,
+            Fl::h() - 2 * BORDERWIDTH, "");
 
     window->end();
     window->show(argc, argv);

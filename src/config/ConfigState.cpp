@@ -38,6 +38,7 @@
 #include "../AutopoweroffState.h"
 #include "../OmmiKomm.h"
 #include "ConfigState.h"
+#include "OKConfigPersistent.h"
 
 ConfigState::ConfigState(IOKCommands *Commands, IOKConfig *Config)
 {
@@ -64,6 +65,8 @@ int ConfigState::handleKey(int key) {
         return(1);
     }
 
+    OKConfigPersistent configWriter(Config);
+    configWriter.write(CONFIGFILENAME);
     Commands->setNewState(Commands->getTypingState());
     return (1);
 }

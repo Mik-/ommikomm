@@ -51,16 +51,16 @@ class OKConfig : public IOKConfig {
 
         virtual void toggleContrast(void);
         virtual int getContrastIndex();
-        void setContrastIndex(int contrast);
+        virtual void setContrastIndex(int contrast);
         int getBackColor(void);
         int getTextColor(void);
         virtual void toggleFont(void);
         virtual int getFontIndex();
-        void setFontIndex(int font);
+        virtual void setFontIndex(int font);
         int getFont(void);
         virtual void toggleLinecount();
         virtual int getLinecountIndex();
-        void setLinecountIntdex(int linecount);
+        virtual void setLinecountIntdex(int linecount);
         int getLinecount();
     protected:
     private:

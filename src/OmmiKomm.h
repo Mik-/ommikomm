@@ -42,9 +42,11 @@
     #define WAITCLOSEHELP 30
 #endif
 
-#define RAND 5
+#define BORDERWIDTH 5
 
 #define _(String) gettext (String)
 
 #define COPYRIGHTYEAR "2015"
+
+#define CONFIGFILENAME ".ommikomm.conf"
 
