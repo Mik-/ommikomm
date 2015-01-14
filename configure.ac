@@ -14,6 +14,9 @@ AC_PROG_AWK
 AC_PROG_CXX
 AC_PROG_LN_S
 
+AC_PATH_PROG(CXXTEST, cxxtestgen, no)
+AM_CONDITIONAL(HAVE_CXXTEST, test "$CXXTEST" != "no")
+
 # Checks for libraries.
 PKG_CHECK_MODULES([LIBXMLXX], [libxml++-2.6])
 

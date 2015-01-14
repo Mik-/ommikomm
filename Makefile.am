@@ -3,6 +3,12 @@ ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/AutopoweroffState.cpp sr
 ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
 
+TESTS = check_ommikomm
+check_PROGRAMS = check_ommikomm
+check_ommikomm_SOURCES = tests/check_ommikomm.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+check_ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
+check_ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
+
 SUBDIRS = . po
 
 AUTOMAKE_OPTIONS = subdir-objects 
@@ -40,4 +46,9 @@ force-update-gmo-%: check-gettext
 	touch po/$$language.po ; \
 	cd po && $(MAKE) $(AM_MAKEFLAGS) update-gmo
 
-.PHONY: check-gettext update-po update-gmo force-update-gmo
+update-testrunner:
+	@if test x$(HAVE_CXXTEST) == "xno"; then echo "Missing cxxtest."; exit 1; fi
+	cxxtestgen --include=../src/config.h -o tests/check_ommikomm.cpp tests/check_persistence.cpp
+
+
+.PHONY: check-gettext update-po update-gmo force-update-gmo update-testrunner

@@ -72,6 +72,7 @@ void OKConfigPersistent::write(std::string filename) {
 void OKConfigPersistent::read(std::string filename) {
 	std::stringstream fullFilename;
 	fullFilename << getHomeDir() << "/" << filename;
+	std::cout << "fullfilename: " << fullFilename.str() << "\n";
 
 	if (fileExists(fullFilename.str())) {
 		try {
@@ -83,6 +84,8 @@ void OKConfigPersistent::read(std::string filename) {
 
 			xmlpp::Node *rootNode;
 			rootNode = doc->get_root_node();
+
+			std::cout << rootNode->get_name();
 
 			const xmlpp::TextNode *contrastNode =
 					dynamic_cast<const xmlpp::TextNode*>(rootNode->get_children(
