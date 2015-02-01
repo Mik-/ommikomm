@@ -46,5 +46,17 @@ public:
  void runTest() { suite_OKConfigPersistentTest.test_read(); }
 } testDescription_suite_OKConfigPersistentTest_test_read;
 
+static class TestDescription_suite_OKConfigPersistentTest_test_read2 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_OKConfigPersistentTest_test_read2() : CxxTest::RealTestDescription( Tests_OKConfigPersistentTest, suiteDescription_OKConfigPersistentTest, 55, "test_read2" ) {}
+ void runTest() { suite_OKConfigPersistentTest.test_read2(); }
+} testDescription_suite_OKConfigPersistentTest_test_read2;
+
+static class TestDescription_suite_OKConfigPersistentTest_test_write : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_OKConfigPersistentTest_test_write() : CxxTest::RealTestDescription( Tests_OKConfigPersistentTest, suiteDescription_OKConfigPersistentTest, 65, "test_write" ) {}
+ void runTest() { suite_OKConfigPersistentTest.test_write(); }
+} testDescription_suite_OKConfigPersistentTest_test_write;
+
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

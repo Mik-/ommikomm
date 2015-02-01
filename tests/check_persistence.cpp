@@ -7,6 +7,11 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <cstdio>
+
+#include "compare_files.cpp"
+
+#define TEMPCONFIGFILENAME "./tests/test_data/temp.xml"
 
 class OKConfigPersistentTest : public CxxTest::TestSuite {
 		OKConfigPersistent *configPersister;
@@ -50,5 +55,36 @@ class OKConfigPersistentTest : public CxxTest::TestSuite {
 			TSM_ASSERT_EQUALS("contrast should be 1", 1, config->getContrastIndex());
 			TSM_ASSERT_EQUALS("font should be 2", 2, config->getFontIndex());
 			TSM_ASSERT_EQUALS("line count should be 3", 3, config->getLinecountIndex());
+		}
+
+		void test_read2() {
+			std::string filename("./tests/test_data/config2.xml");
+
+			configPersister->read(filename);
+
+			TSM_ASSERT_EQUALS("contrast should be 0", 0, config->getContrastIndex());
+			TSM_ASSERT_EQUALS("font should be 0", 0, config->getFontIndex());
+			TSM_ASSERT_EQUALS("line count should be 0", 0, config->getLinecountIndex());
+		}
+
+		void test_write() {
+			std::string filename(TEMPCONFIGFILENAME);
+
+			config->setContrastIndex(1);
+			config->setFontIndex(2);
+			config->setLinecountIntdex(3);
+
+			configPersister->write(filename);
+
+			TSM_ASSERT("first write", equalFiles(TEMPCONFIGFILENAME, "./tests/test_data/config1.xml"));
+
+			config->setContrastIndex(2);
+			config->setFontIndex(3);
+			config->setLinecountIntdex(4);
+
+			configPersister->write(filename);
+			TSM_ASSERT("second write", equalFiles(TEMPCONFIGFILENAME, "./tests/test_data/config3.xml"));
+
+			std::remove(TEMPCONFIGFILENAME);
 		}
 };

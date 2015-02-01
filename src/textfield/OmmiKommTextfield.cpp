@@ -58,11 +58,16 @@ OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) 
 {
   type (FL_MULTILINE_INPUT_WRAP);
 
+  // Create the config object and the reader for the config
   config = new OKConfig(this);
-
   OKConfigPersistent configReader(config);
-  configReader.read(CONFIGFILENAME);
 
+  // Build the config filename and read the config file
+  std::stringstream configFilename;
+  configFilename << configReader.getHomeDir() << "/" << CONFIGFILENAME;
+  configReader.read(configFilename.str());
+
+  // Create the state objects
   helpState = new HelpState(this, WAITCLOSEHELP);
   typingState = new TypingState(this, config->getLinecount(), AUTOPOWEROFF);
   autopoweroffState = new AutopoweroffState(this, WAITPOWEROFF);

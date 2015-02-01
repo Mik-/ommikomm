@@ -68,13 +68,11 @@ void OKConfigPersistent::write(std::string filename) {
 	fontNode->add_child_text(font_value.str());
 
 	std::ostringstream linecount_value;
-	linecount_value << config->getFontIndex();
+	linecount_value << config->getLinecountIndex();
 	xmlpp::Element *linecountNode = rootNode->add_child(LINECOUNTNODENAME);
 	linecountNode->add_child_text(linecount_value.str());
 
-	std::stringstream fullFilename;
-	fullFilename << getHomeDir() << "/" << filename;
-	doc.write_to_file(fullFilename.str());
+	doc.write_to_file(filename);
 }
 
 int getIntValue(xmlpp::Node *rootNode, const Glib::ustring &nodeName) {
@@ -89,26 +87,34 @@ int getIntValue(xmlpp::Node *rootNode, const Glib::ustring &nodeName) {
 		s >> result;
 		return result;
 	} else {
-		return -1;
+		std::cerr << "Configuration node '" << nodeName << "' not found!";
+		return 0;
 	}
 }
 
 void OKConfigPersistent::read(std::string filename) {
-	std::cout << "filename: " << filename << "\n";
-
 	if (fileExists(filename)) {
 		xmlpp::DomParser parser;
 		parser.parse_file(filename);
 
 		xmlpp::Document *doc;
 		doc = parser.get_document();
+		if (doc) {
+			xmlpp::Node *rootNode;
+			rootNode = doc->get_root_node();
 
-		xmlpp::Node *rootNode;
-		rootNode = doc->get_root_node();
-
-		config->setContrastIndex(getIntValue(rootNode, CONTRASTNODENAME));
-		config->setFontIndex(getIntValue(rootNode, FONTNODENAME));
-		config->setLinecountIntdex(getIntValue(rootNode, LINECOUNTNODENAME));
+			if (rootNode &&  rootNode->get_name().compare(ROOTNODENAME) == 0) {
+				config->setContrastIndex(getIntValue(rootNode, CONTRASTNODENAME));
+				config->setFontIndex(getIntValue(rootNode, FONTNODENAME));
+				config->setLinecountIntdex(getIntValue(rootNode, LINECOUNTNODENAME));
+			} else {
+				std::cerr << "Root node '" << ROOTNODENAME << "' not found!\n";
+			}
+		} else {
+			std::cerr << "Not a valid configuration file!\n";
+		}
+	} else {
+		std::cerr << "Configuration file '" << filename << "' not found!\n";
 	}
 }
 

@@ -65,9 +65,14 @@ int ConfigState::handleKey(int key) {
         return(1);
     }
 
+    // write changes to config file
     OKConfigPersistent configWriter(Config);
-    configWriter.write(CONFIGFILENAME);
+    std::stringstream configFilename;
+    configFilename << configWriter.getHomeDir() << "/" << CONFIGFILENAME;
+    configWriter.write(configFilename.str());
+
     Commands->setNewState(Commands->getTypingState());
+
     return (1);
 }
 
