@@ -33,7 +33,7 @@
  */
 
 #include "OKConfigPersistent.h"
-#include <libxml++/libxml++.h>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -42,26 +42,34 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <libxml++/libxml++.h>
+
+
+const char* OKConfigPersistent::ROOTNODENAME = "ommikomm";
+const char* OKConfigPersistent::CONTRASTNODENAME = "contrast";
+const char* OKConfigPersistent::FONTNODENAME = "font";
+const char* OKConfigPersistent::LINECOUNTNODENAME = "linecount";
+
 
 void OKConfigPersistent::write(std::string filename) {
 
 	xmlpp::Document doc;
 
-	xmlpp::Element *rootNode = doc.create_root_node("ommikomm");
+	xmlpp::Element *rootNode = doc.create_root_node(ROOTNODENAME);
 
 	std::ostringstream contrast_value;
 	contrast_value << config->getContrastIndex();
-	xmlpp::Element *contrastNode = rootNode->add_child("contrast");
+	xmlpp::Element *contrastNode = rootNode->add_child(CONTRASTNODENAME);
 	contrastNode->add_child_text(contrast_value.str());
 
 	std::ostringstream font_value;
 	font_value << config->getFontIndex();
-	xmlpp::Element *fontNode = rootNode->add_child("font");
+	xmlpp::Element *fontNode = rootNode->add_child(FONTNODENAME);
 	fontNode->add_child_text(font_value.str());
 
 	std::ostringstream linecount_value;
 	linecount_value << config->getFontIndex();
-	xmlpp::Element *linecountNode = rootNode->add_child("linecount");
+	xmlpp::Element *linecountNode = rootNode->add_child(LINECOUNTNODENAME);
 	linecountNode->add_child_text(linecount_value.str());
 
 	std::stringstream fullFilename;
@@ -69,34 +77,38 @@ void OKConfigPersistent::write(std::string filename) {
 	doc.write_to_file(fullFilename.str());
 }
 
+int getIntValue(xmlpp::Node *rootNode, const Glib::ustring &nodeName) {
+	xmlpp::Element *elementNode =
+			dynamic_cast<xmlpp::Element*>(rootNode->get_first_child(nodeName));
+
+	if (elementNode && elementNode->has_child_text()) {
+		std::stringstream s;
+		int result;
+
+		s << elementNode->get_child_text()->get_content();
+		s >> result;
+		return result;
+	} else {
+		return -1;
+	}
+}
+
 void OKConfigPersistent::read(std::string filename) {
-	std::stringstream fullFilename;
-	fullFilename << getHomeDir() << "/" << filename;
-	std::cout << "fullfilename: " << fullFilename.str() << "\n";
+	std::cout << "filename: " << filename << "\n";
 
-	if (fileExists(fullFilename.str())) {
-		try {
-			xmlpp::DomParser parser;
-			parser.parse_file(fullFilename.str());
+	if (fileExists(filename)) {
+		xmlpp::DomParser parser;
+		parser.parse_file(filename);
 
-			xmlpp::Document *doc;
-			doc = parser.get_document();
+		xmlpp::Document *doc;
+		doc = parser.get_document();
 
-			xmlpp::Node *rootNode;
-			rootNode = doc->get_root_node();
+		xmlpp::Node *rootNode;
+		rootNode = doc->get_root_node();
 
-			std::cout << rootNode->get_name();
-
-			const xmlpp::TextNode *contrastNode =
-					dynamic_cast<const xmlpp::TextNode*>(rootNode->get_children(
-							"contrast").front());
-			if (contrastNode) {
-				config->setContrastIndex(
-						atoi(contrastNode->get_content().c_str()));
-			}
-
-		} catch (const std::exception &ex) {
-		}
+		config->setContrastIndex(getIntValue(rootNode, CONTRASTNODENAME));
+		config->setFontIndex(getIntValue(rootNode, FONTNODENAME));
+		config->setLinecountIntdex(getIntValue(rootNode, LINECOUNTNODENAME));
 	}
 }
 

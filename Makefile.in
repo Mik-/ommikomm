@@ -107,6 +107,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_check_ommikomm_OBJECTS =  \
 	tests/check_ommikomm-check_ommikomm.$(OBJEXT) \
+	tests/check_ommikomm-mock_config.$(OBJEXT) \
 	src/check_ommikomm-TypingState.$(OBJEXT) \
 	src/check_ommikomm-AutopoweroffState.$(OBJEXT) \
 	src/config/check_ommikomm-ConfigState.$(OBJEXT) \
@@ -576,9 +577,9 @@ top_srcdir = @top_srcdir@
 ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
-check_ommikomm_SOURCES = tests/check_ommikomm.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+check_ommikomm_SOURCES = tests/check_ommikomm.cpp tests/mock_config.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 check_ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
-check_ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
+check_ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS) 
 SUBDIRS = . po
 AUTOMAKE_OPTIONS = subdir-objects 
 ACLOCAL_AMFLAGS = -I m4
@@ -689,6 +690,8 @@ tests/$(DEPDIR)/$(am__dirstamp):
 	@: > tests/$(DEPDIR)/$(am__dirstamp)
 tests/check_ommikomm-check_ommikomm.$(OBJEXT): tests/$(am__dirstamp) \
 	tests/$(DEPDIR)/$(am__dirstamp)
+tests/check_ommikomm-mock_config.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
 src/$(am__dirstamp):
 	@$(MKDIR_P) src
 	@: > src/$(am__dirstamp)
@@ -785,6 +788,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/textfield/$(DEPDIR)/check_ommikomm-OmmiKommTextfield.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/textfield/$(DEPDIR)/ommikomm-OmmiKommTextfield.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/check_ommikomm-check_ommikomm.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/check_ommikomm-mock_config.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -815,6 +819,20 @@ tests/check_ommikomm-check_ommikomm.obj: tests/check_ommikomm.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='tests/check_ommikomm.cpp' object='tests/check_ommikomm-check_ommikomm.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o tests/check_ommikomm-check_ommikomm.obj `if test -f 'tests/check_ommikomm.cpp'; then $(CYGPATH_W) 'tests/check_ommikomm.cpp'; else $(CYGPATH_W) '$(srcdir)/tests/check_ommikomm.cpp'; fi`
+
+tests/check_ommikomm-mock_config.o: tests/mock_config.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT tests/check_ommikomm-mock_config.o -MD -MP -MF tests/$(DEPDIR)/check_ommikomm-mock_config.Tpo -c -o tests/check_ommikomm-mock_config.o `test -f 'tests/mock_config.cpp' || echo '$(srcdir)/'`tests/mock_config.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) tests/$(DEPDIR)/check_ommikomm-mock_config.Tpo tests/$(DEPDIR)/check_ommikomm-mock_config.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='tests/mock_config.cpp' object='tests/check_ommikomm-mock_config.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o tests/check_ommikomm-mock_config.o `test -f 'tests/mock_config.cpp' || echo '$(srcdir)/'`tests/mock_config.cpp
+
+tests/check_ommikomm-mock_config.obj: tests/mock_config.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT tests/check_ommikomm-mock_config.obj -MD -MP -MF tests/$(DEPDIR)/check_ommikomm-mock_config.Tpo -c -o tests/check_ommikomm-mock_config.obj `if test -f 'tests/mock_config.cpp'; then $(CYGPATH_W) 'tests/mock_config.cpp'; else $(CYGPATH_W) '$(srcdir)/tests/mock_config.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) tests/$(DEPDIR)/check_ommikomm-mock_config.Tpo tests/$(DEPDIR)/check_ommikomm-mock_config.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='tests/mock_config.cpp' object='tests/check_ommikomm-mock_config.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o tests/check_ommikomm-mock_config.obj `if test -f 'tests/mock_config.cpp'; then $(CYGPATH_W) 'tests/mock_config.cpp'; else $(CYGPATH_W) '$(srcdir)/tests/mock_config.cpp'; fi`
 
 src/check_ommikomm-TypingState.o: src/TypingState.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/check_ommikomm-TypingState.o -MD -MP -MF src/$(DEPDIR)/check_ommikomm-TypingState.Tpo -c -o src/check_ommikomm-TypingState.o `test -f 'src/TypingState.cpp' || echo '$(srcdir)/'`src/TypingState.cpp
@@ -1658,7 +1676,7 @@ force-update-gmo-%: check-gettext
 
 update-testrunner:
 	@if test x$(HAVE_CXXTEST) == "xno"; then echo "Missing cxxtest."; exit 1; fi
-	cxxtestgen --include=../src/config.h -o tests/check_ommikomm.cpp tests/check_persistence.cpp
+	cxxtestgen --error-printer --include=../src/config.h -o tests/check_ommikomm.cpp tests/check_persistence.cpp
 
 .PHONY: check-gettext update-po update-gmo force-update-gmo update-testrunner
 

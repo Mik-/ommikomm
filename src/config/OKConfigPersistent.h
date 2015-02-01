@@ -40,6 +40,7 @@
 #include "IOKConfig.h"
 
 
+
 class OKConfigPersistent
 {
     public:
@@ -47,12 +48,18 @@ class OKConfigPersistent
 
         void write(std::string filename);
         void read(std::string filename);
-    protected:
-    private:
-        IOKConfig *config;
 
         bool fileExists(std::string filename);
         const char *getHomeDir();
+    protected:
+
+		static const char* ROOTNODENAME;
+		static const char* CONTRASTNODENAME;
+		static const char* FONTNODENAME;
+		static const char* LINECOUNTNODENAME;
+
+    private:
+        IOKConfig *config;
 };
 
 #endif // OKCONFIGPERSISTENT_H
