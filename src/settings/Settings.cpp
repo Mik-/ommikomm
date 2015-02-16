@@ -32,9 +32,9 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include "OKConfig.h"
+#include "../settings/Settings.h"
 
-OKConfig::OKConfig(IOKConfigChange *changeCallback)
+Settings::Settings(ISettingsChange *changeCallback)
 {
     this->changeCallback = changeCallback;
 
@@ -43,12 +43,12 @@ OKConfig::OKConfig(IOKConfigChange *changeCallback)
     linecount = 0;
 }
 
-OKConfig::~OKConfig()
+Settings::~Settings()
 {
     //dtor
 }
 
-void OKConfig::toggleContrast() {
+void Settings::toggleContrast() {
     if (++contrast >= maxContrasts) {
         contrast = 0;
     }
@@ -56,23 +56,23 @@ void OKConfig::toggleContrast() {
     changeCallback->configChange();
 }
 
-int OKConfig::getContrastIndex() {
+int Settings::getContrastIndex() {
     return (contrast);
 }
 
-int OKConfig::getFontIndex() {
+int Settings::getFontIndex() {
     return (font);
 }
 
-int OKConfig::getBackColor() {
+int Settings::getBackColor() {
     return (Contrasts[contrast].backColor);
 }
 
-int OKConfig::getTextColor(){
+int Settings::getTextColor(){
     return (Contrasts[contrast].textColor);
 }
 
-void OKConfig::toggleFont() {
+void Settings::toggleFont() {
     if (++font >= maxFonts) {
         font = 0;
     }
@@ -80,11 +80,11 @@ void OKConfig::toggleFont() {
     changeCallback->configChange();
 }
 
-int OKConfig::getFont() {
+int Settings::getFont() {
     return (Fonts[font]);
 }
 
-void OKConfig::toggleLinecount() {
+void Settings::toggleLinecount() {
     if (++linecount >= maxLinecounts) {
         linecount = 0;
     }
@@ -92,25 +92,25 @@ void OKConfig::toggleLinecount() {
     changeCallback->configChange();
 }
 
-int OKConfig::getLinecountIndex() {
+int Settings::getLinecountIndex() {
     return (linecount);
 }
 
-int OKConfig::getLinecount() {
+int Settings::getLinecount() {
     return (Linecounts[linecount]);
 }
 
-void OKConfig::setFontIndex(int font)
+void Settings::setFontIndex(int font)
 {
     this->font = font;
 }
 
-void OKConfig::setContrastIndex(int contrast)
+void Settings::setContrastIndex(int contrast)
 {
     this->contrast = contrast;
 }
 
-void OKConfig::setLinecountIntdex(int linecount)
+void Settings::setLinecountIntdex(int linecount)
 {
     this->linecount = linecount;
 }

@@ -47,8 +47,8 @@
 #include "IOKCommands.h"
 #include "OmmiKomm.h"
 #include "help/HelpState.h"
-#include "config/ConfigState.h"
-#include "config/OKConfig.h"
+#include "settings/Settings.h"
+#include "settings/SettingsState.h"
 #include "textfield/OmmiKommTextfield.h"
 #include "TypingState.h"
 

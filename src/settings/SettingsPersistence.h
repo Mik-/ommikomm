@@ -32,22 +32,34 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOKCONFIG_H
-#define IOKCONFIG_H
+#ifndef SETTINGSPERSISTENCE_H
+#define SETTINGSPERSISTENCE_H
+
+#include <string>
+
+#include "../settings/ISettings.h"
 
 
-class IOKConfig
+
+class SettingsPersistence
 {
     public:
-        virtual void toggleContrast() = 0;
-        virtual int getContrastIndex() = 0;
-        virtual void setContrastIndex(int contrast) = 0;
-        virtual void toggleFont() = 0;
-        virtual int getFontIndex() = 0;
-        virtual void setFontIndex(int font) = 0;
-        virtual void toggleLinecount() = 0;
-        virtual int getLinecountIndex() = 0;
-        virtual void setLinecountIntdex(int linecount) = 0;
+        SettingsPersistence(ISettings *config);
+
+        void write(std::string filename);
+        void read(std::string filename);
+
+        bool fileExists(std::string filename);
+        const char *getHomeDir();
+    protected:
+
+		static const char* ROOTNODENAME;
+		static const char* CONTRASTNODENAME;
+		static const char* FONTNODENAME;
+		static const char* LINECOUNTNODENAME;
+
+    private:
+        ISettings *config;
 };
 
-#endif // IOKCONFIG_H
+#endif // SETTINGSPERSISTENCE_H

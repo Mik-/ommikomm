@@ -32,8 +32,8 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONFIG_H_INCLUDED
-#define CONFIG_H_INCLUDED
+#ifndef SETTINGVALUES_H_INCLUDED
+#define SETTINGVALUES_H_INCLUDED
 
 struct contrastItem {
     Fl_Color backColor;
@@ -70,4 +70,4 @@ const int Linecounts[maxLinecounts] = {
     4
 };
 
-#endif // CONFIG_H_INCLUDED
+#endif // SETTINGVALUES_H_INCLUDED

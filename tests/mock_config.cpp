@@ -5,20 +5,20 @@
  *      Author: michael
  */
 
-#include "../src/config/IOKConfig.h"
+#include "../src/settings/ISettings.h"
 
-class mock_OKConfig : public IOKConfig {
+class mock_Settings : public ISettings {
     private:
         int contrast;
         int font;
         int linecount;
     public:
-		mock_OKConfig() {
+		mock_Settings() {
 			contrast = 0;
 			font = 0;
 			linecount = 0;
 		};
-        virtual ~mock_OKConfig() {};
+        virtual ~mock_Settings() {};
 
         virtual void toggleContrast() { this->contrast++; };
         virtual int getContrastIndex() { return this->contrast; };

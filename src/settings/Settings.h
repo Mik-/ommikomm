@@ -32,22 +32,23 @@
  erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OKCONFIG_H
-#define OKCONFIG_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
 #include <FL/Enumerations.H>
-#include "Config.h"
-#include "IOKConfig.h"
 
-class IOKConfigChange {
+#include "../settings/ISettings.h"
+#include "../settings/SettingValues.h"
+
+class ISettingsChange {
     public:
         virtual void configChange() = 0;
 };
 
-class OKConfig : public IOKConfig {
+class Settings : public ISettings {
     public:
-        OKConfig(IOKConfigChange *changeCallback);
-        virtual ~OKConfig();
+        Settings(ISettingsChange *changeCallback);
+        virtual ~Settings();
 
         virtual void toggleContrast(void);
         virtual int getContrastIndex();
@@ -67,7 +68,7 @@ class OKConfig : public IOKConfig {
         int contrast;
         int font;
         int linecount;
-        IOKConfigChange *changeCallback;
+        ISettingsChange *changeCallback;
 };
 
-#endif // OKCONFIG_H
+#endif // SETTINGS_H

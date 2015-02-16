@@ -1,6 +1,5 @@
 #include <cxxtest/TestSuite.h>
-#include "../src/config/OKConfigPersistent.h"
-#include "../src/config/IOKConfig.h"
+#include "../src/settings/Settings.h"
 #include "mock_config.cpp"
 #include <string>
 #include <stdlib.h>
@@ -9,17 +8,18 @@
 #include <pwd.h>
 #include <cstdio>
 
+#include "../src/settings/SettingsPersistence.h"
 #include "compare_files.cpp"
 
 #define TEMPCONFIGFILENAME "./tests/test_data/temp.xml"
 
 class OKConfigPersistentTest : public CxxTest::TestSuite {
-		OKConfigPersistent *configPersister;
-		IOKConfig *config;
+		SettingsPersistence *configPersister;
+		ISettings *config;
 	public:
 		void setUp() {
-			config = new mock_OKConfig();
-			configPersister = new OKConfigPersistent(config);
+			config = new mock_Settings();
+			configPersister = new SettingsPersistence(config);
 		}
 
 		void tearDown() {
@@ -31,6 +31,7 @@ class OKConfigPersistentTest : public CxxTest::TestSuite {
 			std::string filename("./configure.ac");
 
 			TSM_ASSERT("file should exist", configPersister->fileExists(filename));
+
 			filename.assign("./xconfigure.acx");
 
 			TSM_ASSERT("file should not exist", not configPersister->fileExists(filename));

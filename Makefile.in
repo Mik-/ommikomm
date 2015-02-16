@@ -110,9 +110,9 @@ am_check_ommikomm_OBJECTS =  \
 	tests/check_ommikomm-mock_config.$(OBJEXT) \
 	src/check_ommikomm-TypingState.$(OBJEXT) \
 	src/check_ommikomm-AutopoweroffState.$(OBJEXT) \
-	src/config/check_ommikomm-ConfigState.$(OBJEXT) \
-	src/config/check_ommikomm-OKConfig.$(OBJEXT) \
-	src/config/check_ommikomm-OKConfigPersistent.$(OBJEXT) \
+	src/settings/check_ommikomm-SettingsState.$(OBJEXT) \
+	src/settings/check_ommikomm-Settings.$(OBJEXT) \
+	src/settings/check_ommikomm-SettingsPersistence.$(OBJEXT) \
 	src/help/check_ommikomm-HelpState.$(OBJEXT) \
 	src/textfield/check_ommikomm-OmmiKommTextfield.$(OBJEXT)
 check_ommikomm_OBJECTS = $(am_check_ommikomm_OBJECTS)
@@ -121,9 +121,9 @@ check_ommikomm_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am_ommikomm_OBJECTS = src/ommikomm-main.$(OBJEXT) \
 	src/ommikomm-TypingState.$(OBJEXT) \
 	src/ommikomm-AutopoweroffState.$(OBJEXT) \
-	src/config/ommikomm-ConfigState.$(OBJEXT) \
-	src/config/ommikomm-OKConfig.$(OBJEXT) \
-	src/config/ommikomm-OKConfigPersistent.$(OBJEXT) \
+	src/settings/ommikomm-SettingsState.$(OBJEXT) \
+	src/settings/ommikomm-Settings.$(OBJEXT) \
+	src/settings/ommikomm-SettingsPersistence.$(OBJEXT) \
 	src/help/ommikomm-HelpState.$(OBJEXT) \
 	src/textfield/ommikomm-OmmiKommTextfield.$(OBJEXT)
 ommikomm_OBJECTS = $(am_ommikomm_OBJECTS)
@@ -574,10 +574,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
-check_ommikomm_SOURCES = tests/check_ommikomm.cpp tests/mock_config.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/config/ConfigState.cpp src/config/OKConfig.cpp src/config/OKConfigPersistent.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+check_ommikomm_SOURCES = tests/check_ommikomm.cpp tests/mock_config.cpp src/TypingState.cpp src/AutopoweroffState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 check_ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 check_ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS) 
 SUBDIRS = . po
@@ -702,21 +702,21 @@ src/check_ommikomm-TypingState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/check_ommikomm-AutopoweroffState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/config/$(am__dirstamp):
-	@$(MKDIR_P) src/config
-	@: > src/config/$(am__dirstamp)
-src/config/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) src/config/$(DEPDIR)
-	@: > src/config/$(DEPDIR)/$(am__dirstamp)
-src/config/check_ommikomm-ConfigState.$(OBJEXT):  \
-	src/config/$(am__dirstamp) \
-	src/config/$(DEPDIR)/$(am__dirstamp)
-src/config/check_ommikomm-OKConfig.$(OBJEXT):  \
-	src/config/$(am__dirstamp) \
-	src/config/$(DEPDIR)/$(am__dirstamp)
-src/config/check_ommikomm-OKConfigPersistent.$(OBJEXT):  \
-	src/config/$(am__dirstamp) \
-	src/config/$(DEPDIR)/$(am__dirstamp)
+src/settings/$(am__dirstamp):
+	@$(MKDIR_P) src/settings
+	@: > src/settings/$(am__dirstamp)
+src/settings/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) src/settings/$(DEPDIR)
+	@: > src/settings/$(DEPDIR)/$(am__dirstamp)
+src/settings/check_ommikomm-SettingsState.$(OBJEXT):  \
+	src/settings/$(am__dirstamp) \
+	src/settings/$(DEPDIR)/$(am__dirstamp)
+src/settings/check_ommikomm-Settings.$(OBJEXT):  \
+	src/settings/$(am__dirstamp) \
+	src/settings/$(DEPDIR)/$(am__dirstamp)
+src/settings/check_ommikomm-SettingsPersistence.$(OBJEXT):  \
+	src/settings/$(am__dirstamp) \
+	src/settings/$(DEPDIR)/$(am__dirstamp)
 src/help/$(am__dirstamp):
 	@$(MKDIR_P) src/help
 	@: > src/help/$(am__dirstamp)
@@ -744,13 +744,15 @@ src/ommikomm-TypingState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ommikomm-AutopoweroffState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/config/ommikomm-ConfigState.$(OBJEXT): src/config/$(am__dirstamp) \
-	src/config/$(DEPDIR)/$(am__dirstamp)
-src/config/ommikomm-OKConfig.$(OBJEXT): src/config/$(am__dirstamp) \
-	src/config/$(DEPDIR)/$(am__dirstamp)
-src/config/ommikomm-OKConfigPersistent.$(OBJEXT):  \
-	src/config/$(am__dirstamp) \
-	src/config/$(DEPDIR)/$(am__dirstamp)
+src/settings/ommikomm-SettingsState.$(OBJEXT):  \
+	src/settings/$(am__dirstamp) \
+	src/settings/$(DEPDIR)/$(am__dirstamp)
+src/settings/ommikomm-Settings.$(OBJEXT):  \
+	src/settings/$(am__dirstamp) \
+	src/settings/$(DEPDIR)/$(am__dirstamp)
+src/settings/ommikomm-SettingsPersistence.$(OBJEXT):  \
+	src/settings/$(am__dirstamp) \
+	src/settings/$(DEPDIR)/$(am__dirstamp)
 src/help/ommikomm-HelpState.$(OBJEXT): src/help/$(am__dirstamp) \
 	src/help/$(DEPDIR)/$(am__dirstamp)
 src/textfield/ommikomm-OmmiKommTextfield.$(OBJEXT):  \
@@ -764,8 +766,8 @@ ommikomm$(EXEEXT): $(ommikomm_OBJECTS) $(ommikomm_DEPENDENCIES) $(EXTRA_ommikomm
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f src/*.$(OBJEXT)
-	-rm -f src/config/*.$(OBJEXT)
 	-rm -f src/help/*.$(OBJEXT)
+	-rm -f src/settings/*.$(OBJEXT)
 	-rm -f src/textfield/*.$(OBJEXT)
 	-rm -f tests/*.$(OBJEXT)
 
@@ -777,14 +779,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-AutopoweroffState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-TypingState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/check_ommikomm-ConfigState.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/check_ommikomm-OKConfig.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/check_ommikomm-OKConfigPersistent.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/ommikomm-ConfigState.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/ommikomm-OKConfig.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/help/$(DEPDIR)/check_ommikomm-HelpState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/help/$(DEPDIR)/ommikomm-HelpState.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/settings/$(DEPDIR)/check_ommikomm-Settings.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/settings/$(DEPDIR)/check_ommikomm-SettingsPersistence.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/settings/$(DEPDIR)/ommikomm-Settings.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/settings/$(DEPDIR)/ommikomm-SettingsPersistence.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/settings/$(DEPDIR)/ommikomm-SettingsState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/textfield/$(DEPDIR)/check_ommikomm-OmmiKommTextfield.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/textfield/$(DEPDIR)/ommikomm-OmmiKommTextfield.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/check_ommikomm-check_ommikomm.Po@am__quote@
@@ -862,47 +864,47 @@ src/check_ommikomm-AutopoweroffState.obj: src/AutopoweroffState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/check_ommikomm-AutopoweroffState.obj `if test -f 'src/AutopoweroffState.cpp'; then $(CYGPATH_W) 'src/AutopoweroffState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/AutopoweroffState.cpp'; fi`
 
-src/config/check_ommikomm-ConfigState.o: src/config/ConfigState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/check_ommikomm-ConfigState.o -MD -MP -MF src/config/$(DEPDIR)/check_ommikomm-ConfigState.Tpo -c -o src/config/check_ommikomm-ConfigState.o `test -f 'src/config/ConfigState.cpp' || echo '$(srcdir)/'`src/config/ConfigState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/check_ommikomm-ConfigState.Tpo src/config/$(DEPDIR)/check_ommikomm-ConfigState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/ConfigState.cpp' object='src/config/check_ommikomm-ConfigState.o' libtool=no @AMDEPBACKSLASH@
+src/settings/check_ommikomm-SettingsState.o: src/settings/SettingsState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/check_ommikomm-SettingsState.o -MD -MP -MF src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Tpo -c -o src/settings/check_ommikomm-SettingsState.o `test -f 'src/settings/SettingsState.cpp' || echo '$(srcdir)/'`src/settings/SettingsState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Tpo src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsState.cpp' object='src/settings/check_ommikomm-SettingsState.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/check_ommikomm-ConfigState.o `test -f 'src/config/ConfigState.cpp' || echo '$(srcdir)/'`src/config/ConfigState.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/check_ommikomm-SettingsState.o `test -f 'src/settings/SettingsState.cpp' || echo '$(srcdir)/'`src/settings/SettingsState.cpp
 
-src/config/check_ommikomm-ConfigState.obj: src/config/ConfigState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/check_ommikomm-ConfigState.obj -MD -MP -MF src/config/$(DEPDIR)/check_ommikomm-ConfigState.Tpo -c -o src/config/check_ommikomm-ConfigState.obj `if test -f 'src/config/ConfigState.cpp'; then $(CYGPATH_W) 'src/config/ConfigState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/ConfigState.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/check_ommikomm-ConfigState.Tpo src/config/$(DEPDIR)/check_ommikomm-ConfigState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/ConfigState.cpp' object='src/config/check_ommikomm-ConfigState.obj' libtool=no @AMDEPBACKSLASH@
+src/settings/check_ommikomm-SettingsState.obj: src/settings/SettingsState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/check_ommikomm-SettingsState.obj -MD -MP -MF src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Tpo -c -o src/settings/check_ommikomm-SettingsState.obj `if test -f 'src/settings/SettingsState.cpp'; then $(CYGPATH_W) 'src/settings/SettingsState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Tpo src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsState.cpp' object='src/settings/check_ommikomm-SettingsState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/check_ommikomm-ConfigState.obj `if test -f 'src/config/ConfigState.cpp'; then $(CYGPATH_W) 'src/config/ConfigState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/ConfigState.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/check_ommikomm-SettingsState.obj `if test -f 'src/settings/SettingsState.cpp'; then $(CYGPATH_W) 'src/settings/SettingsState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsState.cpp'; fi`
 
-src/config/check_ommikomm-OKConfig.o: src/config/OKConfig.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/check_ommikomm-OKConfig.o -MD -MP -MF src/config/$(DEPDIR)/check_ommikomm-OKConfig.Tpo -c -o src/config/check_ommikomm-OKConfig.o `test -f 'src/config/OKConfig.cpp' || echo '$(srcdir)/'`src/config/OKConfig.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/check_ommikomm-OKConfig.Tpo src/config/$(DEPDIR)/check_ommikomm-OKConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfig.cpp' object='src/config/check_ommikomm-OKConfig.o' libtool=no @AMDEPBACKSLASH@
+src/settings/check_ommikomm-Settings.o: src/settings/Settings.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/check_ommikomm-Settings.o -MD -MP -MF src/settings/$(DEPDIR)/check_ommikomm-Settings.Tpo -c -o src/settings/check_ommikomm-Settings.o `test -f 'src/settings/Settings.cpp' || echo '$(srcdir)/'`src/settings/Settings.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/check_ommikomm-Settings.Tpo src/settings/$(DEPDIR)/check_ommikomm-Settings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/Settings.cpp' object='src/settings/check_ommikomm-Settings.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/check_ommikomm-OKConfig.o `test -f 'src/config/OKConfig.cpp' || echo '$(srcdir)/'`src/config/OKConfig.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/check_ommikomm-Settings.o `test -f 'src/settings/Settings.cpp' || echo '$(srcdir)/'`src/settings/Settings.cpp
 
-src/config/check_ommikomm-OKConfig.obj: src/config/OKConfig.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/check_ommikomm-OKConfig.obj -MD -MP -MF src/config/$(DEPDIR)/check_ommikomm-OKConfig.Tpo -c -o src/config/check_ommikomm-OKConfig.obj `if test -f 'src/config/OKConfig.cpp'; then $(CYGPATH_W) 'src/config/OKConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfig.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/check_ommikomm-OKConfig.Tpo src/config/$(DEPDIR)/check_ommikomm-OKConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfig.cpp' object='src/config/check_ommikomm-OKConfig.obj' libtool=no @AMDEPBACKSLASH@
+src/settings/check_ommikomm-Settings.obj: src/settings/Settings.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/check_ommikomm-Settings.obj -MD -MP -MF src/settings/$(DEPDIR)/check_ommikomm-Settings.Tpo -c -o src/settings/check_ommikomm-Settings.obj `if test -f 'src/settings/Settings.cpp'; then $(CYGPATH_W) 'src/settings/Settings.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/Settings.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/check_ommikomm-Settings.Tpo src/settings/$(DEPDIR)/check_ommikomm-Settings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/Settings.cpp' object='src/settings/check_ommikomm-Settings.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/check_ommikomm-OKConfig.obj `if test -f 'src/config/OKConfig.cpp'; then $(CYGPATH_W) 'src/config/OKConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfig.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/check_ommikomm-Settings.obj `if test -f 'src/settings/Settings.cpp'; then $(CYGPATH_W) 'src/settings/Settings.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/Settings.cpp'; fi`
 
-src/config/check_ommikomm-OKConfigPersistent.o: src/config/OKConfigPersistent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/check_ommikomm-OKConfigPersistent.o -MD -MP -MF src/config/$(DEPDIR)/check_ommikomm-OKConfigPersistent.Tpo -c -o src/config/check_ommikomm-OKConfigPersistent.o `test -f 'src/config/OKConfigPersistent.cpp' || echo '$(srcdir)/'`src/config/OKConfigPersistent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/check_ommikomm-OKConfigPersistent.Tpo src/config/$(DEPDIR)/check_ommikomm-OKConfigPersistent.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfigPersistent.cpp' object='src/config/check_ommikomm-OKConfigPersistent.o' libtool=no @AMDEPBACKSLASH@
+src/settings/check_ommikomm-SettingsPersistence.o: src/settings/SettingsPersistence.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/check_ommikomm-SettingsPersistence.o -MD -MP -MF src/settings/$(DEPDIR)/check_ommikomm-SettingsPersistence.Tpo -c -o src/settings/check_ommikomm-SettingsPersistence.o `test -f 'src/settings/SettingsPersistence.cpp' || echo '$(srcdir)/'`src/settings/SettingsPersistence.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/check_ommikomm-SettingsPersistence.Tpo src/settings/$(DEPDIR)/check_ommikomm-SettingsPersistence.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsPersistence.cpp' object='src/settings/check_ommikomm-SettingsPersistence.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/check_ommikomm-OKConfigPersistent.o `test -f 'src/config/OKConfigPersistent.cpp' || echo '$(srcdir)/'`src/config/OKConfigPersistent.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/check_ommikomm-SettingsPersistence.o `test -f 'src/settings/SettingsPersistence.cpp' || echo '$(srcdir)/'`src/settings/SettingsPersistence.cpp
 
-src/config/check_ommikomm-OKConfigPersistent.obj: src/config/OKConfigPersistent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/check_ommikomm-OKConfigPersistent.obj -MD -MP -MF src/config/$(DEPDIR)/check_ommikomm-OKConfigPersistent.Tpo -c -o src/config/check_ommikomm-OKConfigPersistent.obj `if test -f 'src/config/OKConfigPersistent.cpp'; then $(CYGPATH_W) 'src/config/OKConfigPersistent.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfigPersistent.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/check_ommikomm-OKConfigPersistent.Tpo src/config/$(DEPDIR)/check_ommikomm-OKConfigPersistent.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfigPersistent.cpp' object='src/config/check_ommikomm-OKConfigPersistent.obj' libtool=no @AMDEPBACKSLASH@
+src/settings/check_ommikomm-SettingsPersistence.obj: src/settings/SettingsPersistence.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/check_ommikomm-SettingsPersistence.obj -MD -MP -MF src/settings/$(DEPDIR)/check_ommikomm-SettingsPersistence.Tpo -c -o src/settings/check_ommikomm-SettingsPersistence.obj `if test -f 'src/settings/SettingsPersistence.cpp'; then $(CYGPATH_W) 'src/settings/SettingsPersistence.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsPersistence.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/check_ommikomm-SettingsPersistence.Tpo src/settings/$(DEPDIR)/check_ommikomm-SettingsPersistence.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsPersistence.cpp' object='src/settings/check_ommikomm-SettingsPersistence.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/check_ommikomm-OKConfigPersistent.obj `if test -f 'src/config/OKConfigPersistent.cpp'; then $(CYGPATH_W) 'src/config/OKConfigPersistent.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfigPersistent.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/check_ommikomm-SettingsPersistence.obj `if test -f 'src/settings/SettingsPersistence.cpp'; then $(CYGPATH_W) 'src/settings/SettingsPersistence.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsPersistence.cpp'; fi`
 
 src/help/check_ommikomm-HelpState.o: src/help/HelpState.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/help/check_ommikomm-HelpState.o -MD -MP -MF src/help/$(DEPDIR)/check_ommikomm-HelpState.Tpo -c -o src/help/check_ommikomm-HelpState.o `test -f 'src/help/HelpState.cpp' || echo '$(srcdir)/'`src/help/HelpState.cpp
@@ -974,47 +976,47 @@ src/ommikomm-AutopoweroffState.obj: src/AutopoweroffState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-AutopoweroffState.obj `if test -f 'src/AutopoweroffState.cpp'; then $(CYGPATH_W) 'src/AutopoweroffState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/AutopoweroffState.cpp'; fi`
 
-src/config/ommikomm-ConfigState.o: src/config/ConfigState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/ommikomm-ConfigState.o -MD -MP -MF src/config/$(DEPDIR)/ommikomm-ConfigState.Tpo -c -o src/config/ommikomm-ConfigState.o `test -f 'src/config/ConfigState.cpp' || echo '$(srcdir)/'`src/config/ConfigState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/ommikomm-ConfigState.Tpo src/config/$(DEPDIR)/ommikomm-ConfigState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/ConfigState.cpp' object='src/config/ommikomm-ConfigState.o' libtool=no @AMDEPBACKSLASH@
+src/settings/ommikomm-SettingsState.o: src/settings/SettingsState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/ommikomm-SettingsState.o -MD -MP -MF src/settings/$(DEPDIR)/ommikomm-SettingsState.Tpo -c -o src/settings/ommikomm-SettingsState.o `test -f 'src/settings/SettingsState.cpp' || echo '$(srcdir)/'`src/settings/SettingsState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/ommikomm-SettingsState.Tpo src/settings/$(DEPDIR)/ommikomm-SettingsState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsState.cpp' object='src/settings/ommikomm-SettingsState.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/ommikomm-ConfigState.o `test -f 'src/config/ConfigState.cpp' || echo '$(srcdir)/'`src/config/ConfigState.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/ommikomm-SettingsState.o `test -f 'src/settings/SettingsState.cpp' || echo '$(srcdir)/'`src/settings/SettingsState.cpp
 
-src/config/ommikomm-ConfigState.obj: src/config/ConfigState.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/ommikomm-ConfigState.obj -MD -MP -MF src/config/$(DEPDIR)/ommikomm-ConfigState.Tpo -c -o src/config/ommikomm-ConfigState.obj `if test -f 'src/config/ConfigState.cpp'; then $(CYGPATH_W) 'src/config/ConfigState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/ConfigState.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/ommikomm-ConfigState.Tpo src/config/$(DEPDIR)/ommikomm-ConfigState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/ConfigState.cpp' object='src/config/ommikomm-ConfigState.obj' libtool=no @AMDEPBACKSLASH@
+src/settings/ommikomm-SettingsState.obj: src/settings/SettingsState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/ommikomm-SettingsState.obj -MD -MP -MF src/settings/$(DEPDIR)/ommikomm-SettingsState.Tpo -c -o src/settings/ommikomm-SettingsState.obj `if test -f 'src/settings/SettingsState.cpp'; then $(CYGPATH_W) 'src/settings/SettingsState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/ommikomm-SettingsState.Tpo src/settings/$(DEPDIR)/ommikomm-SettingsState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsState.cpp' object='src/settings/ommikomm-SettingsState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/ommikomm-ConfigState.obj `if test -f 'src/config/ConfigState.cpp'; then $(CYGPATH_W) 'src/config/ConfigState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/ConfigState.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/ommikomm-SettingsState.obj `if test -f 'src/settings/SettingsState.cpp'; then $(CYGPATH_W) 'src/settings/SettingsState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsState.cpp'; fi`
 
-src/config/ommikomm-OKConfig.o: src/config/OKConfig.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/ommikomm-OKConfig.o -MD -MP -MF src/config/$(DEPDIR)/ommikomm-OKConfig.Tpo -c -o src/config/ommikomm-OKConfig.o `test -f 'src/config/OKConfig.cpp' || echo '$(srcdir)/'`src/config/OKConfig.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/ommikomm-OKConfig.Tpo src/config/$(DEPDIR)/ommikomm-OKConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfig.cpp' object='src/config/ommikomm-OKConfig.o' libtool=no @AMDEPBACKSLASH@
+src/settings/ommikomm-Settings.o: src/settings/Settings.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/ommikomm-Settings.o -MD -MP -MF src/settings/$(DEPDIR)/ommikomm-Settings.Tpo -c -o src/settings/ommikomm-Settings.o `test -f 'src/settings/Settings.cpp' || echo '$(srcdir)/'`src/settings/Settings.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/ommikomm-Settings.Tpo src/settings/$(DEPDIR)/ommikomm-Settings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/Settings.cpp' object='src/settings/ommikomm-Settings.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/ommikomm-OKConfig.o `test -f 'src/config/OKConfig.cpp' || echo '$(srcdir)/'`src/config/OKConfig.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/ommikomm-Settings.o `test -f 'src/settings/Settings.cpp' || echo '$(srcdir)/'`src/settings/Settings.cpp
 
-src/config/ommikomm-OKConfig.obj: src/config/OKConfig.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/ommikomm-OKConfig.obj -MD -MP -MF src/config/$(DEPDIR)/ommikomm-OKConfig.Tpo -c -o src/config/ommikomm-OKConfig.obj `if test -f 'src/config/OKConfig.cpp'; then $(CYGPATH_W) 'src/config/OKConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfig.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/ommikomm-OKConfig.Tpo src/config/$(DEPDIR)/ommikomm-OKConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfig.cpp' object='src/config/ommikomm-OKConfig.obj' libtool=no @AMDEPBACKSLASH@
+src/settings/ommikomm-Settings.obj: src/settings/Settings.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/ommikomm-Settings.obj -MD -MP -MF src/settings/$(DEPDIR)/ommikomm-Settings.Tpo -c -o src/settings/ommikomm-Settings.obj `if test -f 'src/settings/Settings.cpp'; then $(CYGPATH_W) 'src/settings/Settings.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/Settings.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/ommikomm-Settings.Tpo src/settings/$(DEPDIR)/ommikomm-Settings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/Settings.cpp' object='src/settings/ommikomm-Settings.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/ommikomm-OKConfig.obj `if test -f 'src/config/OKConfig.cpp'; then $(CYGPATH_W) 'src/config/OKConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfig.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/ommikomm-Settings.obj `if test -f 'src/settings/Settings.cpp'; then $(CYGPATH_W) 'src/settings/Settings.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/Settings.cpp'; fi`
 
-src/config/ommikomm-OKConfigPersistent.o: src/config/OKConfigPersistent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/ommikomm-OKConfigPersistent.o -MD -MP -MF src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Tpo -c -o src/config/ommikomm-OKConfigPersistent.o `test -f 'src/config/OKConfigPersistent.cpp' || echo '$(srcdir)/'`src/config/OKConfigPersistent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Tpo src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfigPersistent.cpp' object='src/config/ommikomm-OKConfigPersistent.o' libtool=no @AMDEPBACKSLASH@
+src/settings/ommikomm-SettingsPersistence.o: src/settings/SettingsPersistence.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/ommikomm-SettingsPersistence.o -MD -MP -MF src/settings/$(DEPDIR)/ommikomm-SettingsPersistence.Tpo -c -o src/settings/ommikomm-SettingsPersistence.o `test -f 'src/settings/SettingsPersistence.cpp' || echo '$(srcdir)/'`src/settings/SettingsPersistence.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/ommikomm-SettingsPersistence.Tpo src/settings/$(DEPDIR)/ommikomm-SettingsPersistence.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsPersistence.cpp' object='src/settings/ommikomm-SettingsPersistence.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/ommikomm-OKConfigPersistent.o `test -f 'src/config/OKConfigPersistent.cpp' || echo '$(srcdir)/'`src/config/OKConfigPersistent.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/ommikomm-SettingsPersistence.o `test -f 'src/settings/SettingsPersistence.cpp' || echo '$(srcdir)/'`src/settings/SettingsPersistence.cpp
 
-src/config/ommikomm-OKConfigPersistent.obj: src/config/OKConfigPersistent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/config/ommikomm-OKConfigPersistent.obj -MD -MP -MF src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Tpo -c -o src/config/ommikomm-OKConfigPersistent.obj `if test -f 'src/config/OKConfigPersistent.cpp'; then $(CYGPATH_W) 'src/config/OKConfigPersistent.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfigPersistent.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Tpo src/config/$(DEPDIR)/ommikomm-OKConfigPersistent.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/config/OKConfigPersistent.cpp' object='src/config/ommikomm-OKConfigPersistent.obj' libtool=no @AMDEPBACKSLASH@
+src/settings/ommikomm-SettingsPersistence.obj: src/settings/SettingsPersistence.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/ommikomm-SettingsPersistence.obj -MD -MP -MF src/settings/$(DEPDIR)/ommikomm-SettingsPersistence.Tpo -c -o src/settings/ommikomm-SettingsPersistence.obj `if test -f 'src/settings/SettingsPersistence.cpp'; then $(CYGPATH_W) 'src/settings/SettingsPersistence.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsPersistence.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/settings/$(DEPDIR)/ommikomm-SettingsPersistence.Tpo src/settings/$(DEPDIR)/ommikomm-SettingsPersistence.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/settings/SettingsPersistence.cpp' object='src/settings/ommikomm-SettingsPersistence.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/config/ommikomm-OKConfigPersistent.obj `if test -f 'src/config/OKConfigPersistent.cpp'; then $(CYGPATH_W) 'src/config/OKConfigPersistent.cpp'; else $(CYGPATH_W) '$(srcdir)/src/config/OKConfigPersistent.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/settings/ommikomm-SettingsPersistence.obj `if test -f 'src/settings/SettingsPersistence.cpp'; then $(CYGPATH_W) 'src/settings/SettingsPersistence.cpp'; else $(CYGPATH_W) '$(srcdir)/src/settings/SettingsPersistence.cpp'; fi`
 
 src/help/ommikomm-HelpState.o: src/help/HelpState.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/help/ommikomm-HelpState.o -MD -MP -MF src/help/$(DEPDIR)/ommikomm-HelpState.Tpo -c -o src/help/ommikomm-HelpState.o `test -f 'src/help/HelpState.cpp' || echo '$(srcdir)/'`src/help/HelpState.cpp
@@ -1542,10 +1544,10 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f src/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/$(am__dirstamp)
-	-rm -f src/config/$(DEPDIR)/$(am__dirstamp)
-	-rm -f src/config/$(am__dirstamp)
 	-rm -f src/help/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/help/$(am__dirstamp)
+	-rm -f src/settings/$(DEPDIR)/$(am__dirstamp)
+	-rm -f src/settings/$(am__dirstamp)
 	-rm -f src/textfield/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/textfield/$(am__dirstamp)
 	-rm -f tests/$(DEPDIR)/$(am__dirstamp)
@@ -1561,7 +1563,7 @@ clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
 
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf src/$(DEPDIR) src/config/$(DEPDIR) src/help/$(DEPDIR) src/textfield/$(DEPDIR) tests/$(DEPDIR)
+	-rm -rf src/$(DEPDIR) src/help/$(DEPDIR) src/settings/$(DEPDIR) src/textfield/$(DEPDIR) tests/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -1609,7 +1611,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf src/$(DEPDIR) src/config/$(DEPDIR) src/help/$(DEPDIR) src/textfield/$(DEPDIR) tests/$(DEPDIR)
+	-rm -rf src/$(DEPDIR) src/help/$(DEPDIR) src/settings/$(DEPDIR) src/textfield/$(DEPDIR) tests/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

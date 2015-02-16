@@ -44,16 +44,16 @@
 #include "../TypingState.h"
 #include "../AutopoweroffState.h"
 #include "../help/HelpState.h"
-#include "../config/OKConfig.h"
-#include "../config/ConfigState.h"
+#include "../settings/Settings.h"
+#include "../settings/SettingsState.h"
 
-class OmmiKommTextfield : public Fl_Multiline_Input, public IOKCommands, public IOKConfigChange {
+class OmmiKommTextfield : public Fl_Multiline_Input, public IOKCommands, public ISettingsChange {
     IOKState *currentState;
     HelpState *helpState;
     TypingState *typingState;
     AutopoweroffState *autopoweroffState;
-    ConfigState *configState;
-    OKConfig *config;
+    SettingsState *configState;
+    Settings *config;
 
     virtual void clear_all();
     virtual void poweroff();

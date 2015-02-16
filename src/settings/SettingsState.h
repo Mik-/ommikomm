@@ -32,34 +32,26 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OKCONFIGPERSISTENT_H
-#define OKCONFIGPERSISTENT_H
+#ifndef SETTINGSSTATE_H
+#define SETTINGSSTATE_H
 
-#include <string>
+#include "../IOKState.h"
+#include "../IOKCommands.h"
+#include "../settings/ISettings.h"
 
-#include "IOKConfig.h"
 
-
-
-class OKConfigPersistent
+class SettingsState : public IOKState
 {
     public:
-        OKConfigPersistent(IOKConfig *config);
-
-        void write(std::string filename);
-        void read(std::string filename);
-
-        bool fileExists(std::string filename);
-        const char *getHomeDir();
+        SettingsState(IOKCommands *Commands, ISettings *Config);
+        virtual ~SettingsState();
     protected:
-
-		static const char* ROOTNODENAME;
-		static const char* CONTRASTNODENAME;
-		static const char* FONTNODENAME;
-		static const char* LINECOUNTNODENAME;
-
+        virtual int handleKey(int key);
+        virtual void enterState(void);
+        virtual void tick(void);
     private:
-        IOKConfig *config;
+        IOKCommands *Commands;
+        ISettings *Config;
 };
 
-#endif // OKCONFIGPERSISTENT_H
+#endif // SETTINGSSTATE_H

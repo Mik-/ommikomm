@@ -32,26 +32,22 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONFIGSTATE_H
-#define CONFIGSTATE_H
-
-#include "../IOKState.h"
-#include "../IOKCommands.h"
-#include "IOKConfig.h"
+#ifndef ISETTINGS_H
+#define ISETTINGS_H
 
 
-class ConfigState : public IOKState
+class ISettings
 {
     public:
-        ConfigState(IOKCommands *Commands, IOKConfig *Config);
-        virtual ~ConfigState();
-    protected:
-        virtual int handleKey(int key);
-        virtual void enterState(void);
-        virtual void tick(void);
-    private:
-        IOKCommands *Commands;
-        IOKConfig *Config;
+        virtual void toggleContrast() = 0;
+        virtual int getContrastIndex() = 0;
+        virtual void setContrastIndex(int contrast) = 0;
+        virtual void toggleFont() = 0;
+        virtual int getFontIndex() = 0;
+        virtual void setFontIndex(int font) = 0;
+        virtual void toggleLinecount() = 0;
+        virtual int getLinecountIndex() = 0;
+        virtual void setLinecountIntdex(int linecount) = 0;
 };
 
-#endif // CONFIGSTATE_H
+#endif // ISETTINGS_H

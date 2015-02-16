@@ -45,11 +45,11 @@
 #include "../IOKCommands.h"
 #include "../OmmiKomm.h"
 #include "../help/HelpState.h"
-#include "../config/ConfigState.h"
-#include "../config/OKConfig.h"
-#include "../config/OKConfigPersistent.h"
-
 #include "OmmiKommTextfield.h"
+
+#include "../settings/Settings.h"
+#include "../settings/SettingsPersistence.h"
+#include "../settings/SettingsState.h"
 #include "../TypingState.h"
 
 
@@ -59,8 +59,8 @@ OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) 
   type (FL_MULTILINE_INPUT_WRAP);
 
   // Create the config object and the reader for the config
-  config = new OKConfig(this);
-  OKConfigPersistent configReader(config);
+  config = new Settings(this);
+  SettingsPersistence configReader(config);
 
   // Build the config filename and read the config file
   std::stringstream configFilename;
@@ -71,7 +71,7 @@ OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) 
   helpState = new HelpState(this, WAITCLOSEHELP);
   typingState = new TypingState(this, config->getLinecount(), AUTOPOWEROFF);
   autopoweroffState = new AutopoweroffState(this, WAITPOWEROFF);
-  configState = new ConfigState(this, config);
+  configState = new SettingsState(this, config);
 
   currentState = helpState;
 }

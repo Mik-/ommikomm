@@ -32,7 +32,7 @@
  erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
 
-#include "OKConfigPersistent.h"
+#include "../settings/SettingsPersistence.h"
 
 #include <iostream>
 #include <fstream>
@@ -45,13 +45,13 @@
 #include <libxml++/libxml++.h>
 
 
-const char* OKConfigPersistent::ROOTNODENAME = "ommikomm";
-const char* OKConfigPersistent::CONTRASTNODENAME = "contrast";
-const char* OKConfigPersistent::FONTNODENAME = "font";
-const char* OKConfigPersistent::LINECOUNTNODENAME = "linecount";
+const char* SettingsPersistence::ROOTNODENAME = "ommikomm";
+const char* SettingsPersistence::CONTRASTNODENAME = "contrast";
+const char* SettingsPersistence::FONTNODENAME = "font";
+const char* SettingsPersistence::LINECOUNTNODENAME = "linecount";
 
 
-void OKConfigPersistent::write(std::string filename) {
+void SettingsPersistence::write(std::string filename) {
 
 	xmlpp::Document doc;
 
@@ -92,7 +92,7 @@ int getIntValue(xmlpp::Node *rootNode, const Glib::ustring &nodeName) {
 	}
 }
 
-void OKConfigPersistent::read(std::string filename) {
+void SettingsPersistence::read(std::string filename) {
 	if (fileExists(filename)) {
 		xmlpp::DomParser parser;
 		parser.parse_file(filename);
@@ -118,16 +118,16 @@ void OKConfigPersistent::read(std::string filename) {
 	}
 }
 
-OKConfigPersistent::OKConfigPersistent(IOKConfig *config) {
+SettingsPersistence::SettingsPersistence(ISettings *config) {
 	this->config = config;
 }
 
-bool OKConfigPersistent::fileExists(std::string filename) {
+bool SettingsPersistence::fileExists(std::string filename) {
 	std::ifstream configFile(filename.c_str());
 	return configFile;
 }
 
-const char* OKConfigPersistent::getHomeDir() {
+const char* SettingsPersistence::getHomeDir() {
 	const char *homeDir;
 
 	if ((homeDir = getenv("HOME")) == NULL) {

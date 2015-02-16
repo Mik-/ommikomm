@@ -32,26 +32,27 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
+#include "../settings/SettingsState.h"
+
 #include <libintl.h>
 #include <sstream>
 
 #include "../AutopoweroffState.h"
 #include "../OmmiKomm.h"
-#include "ConfigState.h"
-#include "OKConfigPersistent.h"
+#include "../settings/SettingsPersistence.h"
 
-ConfigState::ConfigState(IOKCommands *Commands, IOKConfig *Config)
+SettingsState::SettingsState(IOKCommands *Commands, ISettings *Config)
 {
     this->Commands = Commands;
     this->Config = Config;
 }
 
-ConfigState::~ConfigState()
+SettingsState::~SettingsState()
 {
     //dtor
 }
 
-int ConfigState::handleKey(int key) {
+int SettingsState::handleKey(int key) {
     if (key == FL_F+3) {
         Config->toggleContrast();
         return(1);
@@ -66,7 +67,7 @@ int ConfigState::handleKey(int key) {
     }
 
     // write changes to config file
-    OKConfigPersistent configWriter(Config);
+    SettingsPersistence configWriter(Config);
     std::stringstream configFilename;
     configFilename << configWriter.getHomeDir() << "/" << CONFIGFILENAME;
     configWriter.write(configFilename.str());
@@ -76,7 +77,7 @@ int ConfigState::handleKey(int key) {
     return (1);
 }
 
-void ConfigState::enterState(void) {
+void SettingsState::enterState(void) {
     std::ostringstream menuText;
 
     Commands->setTextLines(8);
@@ -93,7 +94,7 @@ void ConfigState::enterState(void) {
     Commands->getInput()->value(menuText.str().c_str());
 }
 
-void ConfigState::tick(void) {
+void SettingsState::tick(void) {
     // nothing to do
 }
 
