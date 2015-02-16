@@ -32,25 +32,29 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOKCOMMANDS_H
-#define IOKCOMMANDS_H
+#ifndef RESTARTSTATE_H
+#define RESTARTSTATE_H
 
-#include <FL/Fl_Multiline_Input.H>
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
 
-#include "IOKState.h"
+#include "ICommands.h"
+#include "IState.h"
 
-class IOKCommands
+class RestartState : public IState
 {
     public:
-        virtual void clear_all(void) = 0;
-        virtual void poweroff(void)  = 0;
-        virtual Fl_Multiline_Input *getInput(void) = 0;
-        virtual void setTextLines(int lines) = 0;
-        virtual void setNewState(IOKState *newState) = 0;
-        virtual IOKState *getTypingState(void) = 0;
-        virtual IOKState *getHelpState(void) = 0;
-        virtual IOKState *getAutopoweroffState(void) = 0;
-        virtual IOKState *getConfigState(void) = 0;
+        RestartState(ICommands *Commands, int waitForShutdown);
+        virtual ~RestartState();
+    protected:
+        virtual int handleKey(int key);
+        virtual void enterState(void);
+        virtual void tick(void);
+    private:
+        ICommands *Commands;
+        int waitForShutdown;
+        int ticks;
 };
 
-#endif // IOKCOMMANDS_H
+#endif // RESTARTSTATE_H

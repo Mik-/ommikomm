@@ -35,11 +35,11 @@
 #include <string>
 #include "TypingState.h"
 
-TypingState::TypingState(IOKCommands *Commands, int lines,
-		int waitForAutopoweroff) {
+TypingState::TypingState(ICommands *Commands, int lines,
+		int idleUntilHelpScreen) {
 	this->Commands = Commands;
 	this->lines = lines;
-	this->waitForAutopoweroff = waitForAutopoweroff;
+	this->idleUntilHelpScreen = idleUntilHelpScreen;
 }
 
 TypingState::~TypingState() {
@@ -66,7 +66,7 @@ int TypingState::handleKey(int key) {
 		return (1);
 	}
 	if (key == FL_F + 12) {
-		Commands->setNewState(Commands->getAutopoweroffState());
+		Commands->setNewState(Commands->getRestartState());
 		return (1);
 	}
 
@@ -80,8 +80,8 @@ void TypingState::enterState(void) {
 
 void TypingState::tick(void) {
 	ticks++;
-//    if (ticks >= waitForAutopoweroff) {
-//        Commands->setNewState(Commands->getAutopoweroffState());
-//    }
+    if (ticks >= idleUntilHelpScreen) {
+        Commands->setNewState(Commands->getHelpState());
+    }
 }
 

@@ -35,20 +35,20 @@
 #ifndef HELPSTATE_H
 #define HELPSTATE_H
 
-#include "../IOKState.h"
-#include "../IOKCommands.h"
+#include "../ICommands.h"
+#include "../IState.h"
 
-class HelpState : public IOKState
+class HelpState : public IState
 {
     public:
-        HelpState(IOKCommands *Commands, int waitForAutoClose);
+        HelpState(ICommands *Commands, int waitForAutoClose);
         virtual ~HelpState();
     protected:
         virtual int handleKey(int key);
         virtual void enterState(void);
         virtual void tick(void);
     private:
-        IOKCommands *Commands;
+        ICommands *Commands;
         int waitForAutoClose;
         int ticks;
 };

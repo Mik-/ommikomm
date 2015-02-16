@@ -33,13 +33,11 @@
 */
 
 #ifdef DEBUG
-    #define AUTOPOWEROFF 10
-    #define WAITPOWEROFF 5
-    #define WAITCLOSEHELP 5
+    #define IDLEUNTILHELP 10
+    #define WAITFORHELP 5
 #else
-    #define AUTOPOWEROFF 900
-    #define WAITPOWEROFF 10
-    #define WAITCLOSEHELP 30
+    #define IDLEUNTILHELP 900
+    #define WAITFORHELP 10
 #endif
 
 #define BORDERWIDTH 5

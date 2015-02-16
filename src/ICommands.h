@@ -32,16 +32,25 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOKSTATE_H
-#define IOKSTATE_H
+#ifndef ICOMMANDS_H
+#define ICOMMANDS_H
 
+#include <FL/Fl_Multiline_Input.H>
 
-class IOKState
+#include "IState.h"
+
+class ICommands
 {
     public:
-        virtual int handleKey(int key)  = 0;
-        virtual void enterState(void) = 0;
-        virtual void tick(void) = 0;
+        virtual void clear_all(void) = 0;
+        virtual void restart(void)  = 0;
+        virtual Fl_Multiline_Input *getInput(void) = 0;
+        virtual void setTextLines(int lines) = 0;
+        virtual void setNewState(IState *newState) = 0;
+        virtual IState *getTypingState(void) = 0;
+        virtual IState *getHelpState(void) = 0;
+        virtual IState *getRestartState(void) = 0;
+        virtual IState *getConfigState(void) = 0;
 };
 
-#endif // IOKSTATE_H
+#endif // ICOMMANDS_H

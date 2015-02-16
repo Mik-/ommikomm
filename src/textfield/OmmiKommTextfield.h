@@ -40,34 +40,34 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Multiline_Input.H>
 
-#include "../IOKCommands.h"
+#include "../ICommands.h"
 #include "../TypingState.h"
-#include "../AutopoweroffState.h"
+#include "../RestartState.h"
 #include "../help/HelpState.h"
 #include "../settings/Settings.h"
 #include "../settings/SettingsState.h"
 
-class OmmiKommTextfield : public Fl_Multiline_Input, public IOKCommands, public ISettingsChange {
-    IOKState *currentState;
+class OmmiKommTextfield : public Fl_Multiline_Input, public ICommands, public ISettingsChange {
+    IState *currentState;
     HelpState *helpState;
     TypingState *typingState;
-    AutopoweroffState *autopoweroffState;
+    RestartState *restartState;
     SettingsState *configState;
     Settings *config;
 
     virtual void clear_all();
-    virtual void poweroff();
+    virtual void restart();
     virtual Fl_Multiline_Input *getInput(void);
     virtual void setTextLines(int lines);
-    virtual IOKState *getTypingState(void);
-    virtual IOKState *getAutopoweroffState(void);
-    virtual IOKState *getConfigState(void);
+    virtual IState *getTypingState(void);
+    virtual IState *getRestartState(void);
+    virtual IState *getConfigState(void);
     virtual void configChange();
 public:
     OmmiKommTextfield(int X,int Y,int W,int H,const char* L);
 
-    virtual void setNewState(IOKState *newState);
-    virtual IOKState *getHelpState(void);
+    virtual void setNewState(IState *newState);
+    virtual IState *getHelpState(void);
     int handle(int e);
     void tick(void);
 };

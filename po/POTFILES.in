@@ -1,8 +1,8 @@
-./src/AutopoweroffState.cpp
-./src/config/ConfigState.cpp
-./src/config/OKConfig.cpp
-./src/config/OKConfigPersistent.cpp
 ./src/help/HelpState.cpp
 ./src/main.cpp
+./src/RestartState.cpp
+./src/settings/Settings.cpp
+./src/settings/SettingsPersistence.cpp
+./src/settings/SettingsState.cpp
 ./src/textfield/OmmiKommTextfield.cpp
 ./src/TypingState.cpp

@@ -32,46 +32,16 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#include "AutopoweroffState.h"
+#ifndef ISTATE_H
+#define ISTATE_H
 
-using namespace std;
 
-AutopoweroffState::AutopoweroffState(IOKCommands *Commands, int waitForShutdown)
+class IState
 {
-    this->Commands = Commands;
-    this->waitForShutdown = waitForShutdown;
-    this->ticks = 0;
-}
+    public:
+        virtual int handleKey(int key)  = 0;
+        virtual void enterState(void) = 0;
+        virtual void tick(void) = 0;
+};
 
-AutopoweroffState::~AutopoweroffState()
-{
-    //dtor
-}
-
-int AutopoweroffState::handleKey(int key) {
-    Commands->setNewState(Commands->getTypingState());
-    return (1);
-}
-
-void AutopoweroffState::enterState(void) {
-    ticks = 0;
-    Commands->setTextLines(7);
-    Commands->getInput()->value("OmmiKomm wird jetzt ausgeschaltet.\n\nBitte nicht vergessen, den Fernseher wieder auf \"TV\" zu stellen.");
-}
-
-void AutopoweroffState::tick(void) {
-    string newtext;
-    ostringstream zahl;
-
-    ticks++;
-
-    zahl << (waitForShutdown - ticks);
-    newtext = Commands->getInput()->value();
-    newtext += zahl.str() +  ". ";
-    Commands->getInput()->value(newtext.c_str());
-
-    if (ticks >= waitForShutdown) {
-        Commands->poweroff();
-    }
-}
-
+#endif // ISTATE_H

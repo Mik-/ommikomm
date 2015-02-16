@@ -32,29 +32,55 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef AUTOPOWEROFFSTATE_H
-#define AUTOPOWEROFFSTATE_H
-
-#include <cstdlib>
-#include <iostream>
+#include <libintl.h>
 #include <sstream>
+#include "OmmiKomm.h"
+#include "config.h"
+#include "RestartState.h"
 
-#include "IOKState.h"
-#include "IOKCommands.h"
+using namespace std;
 
-class AutopoweroffState : public IOKState
+RestartState::RestartState(ICommands *Commands, int waitForShutdown)
 {
-    public:
-        AutopoweroffState(IOKCommands *Commands, int waitForShutdown);
-        virtual ~AutopoweroffState();
-    protected:
-        virtual int handleKey(int key);
-        virtual void enterState(void);
-        virtual void tick(void);
-    private:
-        IOKCommands *Commands;
-        int waitForShutdown;
-        int ticks;
-};
+    this->Commands = Commands;
+    this->waitForShutdown = waitForShutdown;
+    this->ticks = 0;
+}
 
-#endif // AUTOPOWEROFFSTATE_H
+RestartState::~RestartState()
+{
+    //dtor
+}
+
+int RestartState::handleKey(int key) {
+    Commands->setNewState(Commands->getTypingState());
+    return (1);
+}
+
+void RestartState::enterState(void) {
+	std::ostringstream restartText;
+
+	ticks = 0;
+    Commands->setTextLines(7);
+
+    restartText << _("OmmiKomm will now restart.");
+
+    Commands->getInput()->value(restartText.str().c_str());
+}
+
+void RestartState::tick(void) {
+    string newtext;
+    ostringstream zahl;
+
+    ticks++;
+
+    zahl << (waitForShutdown - ticks);
+    newtext = Commands->getInput()->value();
+    newtext += zahl.str() +  ". ";
+    Commands->getInput()->value(newtext.c_str());
+
+    if (ticks >= waitForShutdown) {
+        Commands->restart();
+    }
+}
+

@@ -37,11 +37,11 @@
 #include <libintl.h>
 #include <sstream>
 
-#include "../AutopoweroffState.h"
 #include "../OmmiKomm.h"
+#include "../RestartState.h"
 #include "../settings/SettingsPersistence.h"
 
-SettingsState::SettingsState(IOKCommands *Commands, ISettings *Config)
+SettingsState::SettingsState(ICommands *Commands, ISettings *Config)
 {
     this->Commands = Commands;
     this->Config = Config;

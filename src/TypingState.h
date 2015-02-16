@@ -35,13 +35,13 @@
 #ifndef TYPINGSTATE_H
 #define TYPINGSTATE_H
 
-#include "IOKState.h"
-#include "IOKCommands.h"
+#include "ICommands.h"
+#include "IState.h"
 
-class TypingState : public IOKState
+class TypingState : public IState
 {
     public:
-        TypingState(IOKCommands *Commands, int lines, int waitForAutopoweroff);
+        TypingState(ICommands *Commands, int lines, int idleUntilHelpScreen);
         virtual ~TypingState();
 
         void setLines(int lines);
@@ -50,9 +50,9 @@ class TypingState : public IOKState
         virtual void enterState(void);
         virtual void tick(void);
     private:
-        IOKCommands *Commands;
+        ICommands *Commands;
         int lines;
-        int waitForAutopoweroff;
+        int idleUntilHelpScreen;
         int ticks;
 };
 

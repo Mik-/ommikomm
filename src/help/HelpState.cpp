@@ -38,7 +38,7 @@
 #include "../config.h"
 #include "HelpState.h"
 
-HelpState::HelpState(IOKCommands *Commands, int waitForAutoClose)
+HelpState::HelpState(ICommands *Commands, int waitForAutoClose)
 {
     this->Commands = Commands;
     this->waitForAutoClose = waitForAutoClose;

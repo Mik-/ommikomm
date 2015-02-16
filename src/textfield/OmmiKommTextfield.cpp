@@ -41,12 +41,12 @@
 #include <iostream>
 #include <sstream>
 
-#include "../AutopoweroffState.h"
-#include "../IOKCommands.h"
+#include "../ICommands.h"
 #include "../OmmiKomm.h"
 #include "../help/HelpState.h"
 #include "OmmiKommTextfield.h"
 
+#include "../RestartState.h"
 #include "../settings/Settings.h"
 #include "../settings/SettingsPersistence.h"
 #include "../settings/SettingsState.h"
@@ -58,30 +58,30 @@ OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) 
 {
   type (FL_MULTILINE_INPUT_WRAP);
 
-  // Create the config object and the reader for the config
+  // Create the settings object and the reader for the settings
   config = new Settings(this);
-  SettingsPersistence configReader(config);
+  SettingsPersistence settingsReader(config);
 
-  // Build the config filename and read the config file
+  // Build the settings filename and read the settings file
   std::stringstream configFilename;
-  configFilename << configReader.getHomeDir() << "/" << CONFIGFILENAME;
-  configReader.read(configFilename.str());
+  configFilename << settingsReader.getHomeDir() << "/" << CONFIGFILENAME;
+  settingsReader.read(configFilename.str());
 
   // Create the state objects
-  helpState = new HelpState(this, WAITCLOSEHELP);
-  typingState = new TypingState(this, config->getLinecount(), AUTOPOWEROFF);
-  autopoweroffState = new AutopoweroffState(this, WAITPOWEROFF);
+  helpState = new HelpState(this, WAITFORHELP);
+  typingState = new TypingState(this, config->getLinecount(), IDLEUNTILHELP);
+  restartState = new RestartState(this, WAITFORHELP);
   configState = new SettingsState(this, config);
 
   currentState = helpState;
 }
 
-void OmmiKommTextfield::setNewState(IOKState *newState) {
+void OmmiKommTextfield::setNewState(IState *newState) {
     currentState = newState;
     currentState->enterState();
 }
 
-IOKState *OmmiKommTextfield::getHelpState(void) {
+IState *OmmiKommTextfield::getHelpState(void) {
     return (helpState);
 }
 
@@ -109,8 +109,8 @@ void OmmiKommTextfield::clear_all() {
     static_value("");
 }
 
-void OmmiKommTextfield::poweroff() {
-    std::string command = "sudo poweroff";
+void OmmiKommTextfield::restart() {
+    std::string command = "sudo restart";
     #ifndef DEBUG
     int sysres = system(command.c_str());
     #endif
@@ -128,15 +128,15 @@ void OmmiKommTextfield::setTextLines(int lines) {
     clear_all();
 }
 
-IOKState *OmmiKommTextfield::getTypingState(void) {
+IState *OmmiKommTextfield::getTypingState(void) {
     return (typingState);
 }
 
-IOKState *OmmiKommTextfield::getAutopoweroffState(void) {
-    return (autopoweroffState);
+IState *OmmiKommTextfield::getRestartState(void) {
+    return (restartState);
 }
 
-IOKState *OmmiKommTextfield::getConfigState(void) {
+IState *OmmiKommTextfield::getConfigState(void) {
     return (configState);
 }
 

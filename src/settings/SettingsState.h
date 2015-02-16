@@ -35,22 +35,22 @@
 #ifndef SETTINGSSTATE_H
 #define SETTINGSSTATE_H
 
-#include "../IOKState.h"
-#include "../IOKCommands.h"
+#include "../ICommands.h"
+#include "../IState.h"
 #include "../settings/ISettings.h"
 
 
-class SettingsState : public IOKState
+class SettingsState : public IState
 {
     public:
-        SettingsState(IOKCommands *Commands, ISettings *Config);
+        SettingsState(ICommands *Commands, ISettings *Config);
         virtual ~SettingsState();
     protected:
         virtual int handleKey(int key);
         virtual void enterState(void);
         virtual void tick(void);
     private:
-        IOKCommands *Commands;
+        ICommands *Commands;
         ISettings *Config;
 };
 

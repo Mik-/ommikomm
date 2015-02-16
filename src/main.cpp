@@ -42,11 +42,11 @@
 #include <libintl.h>
 
 #include "config.h"
-#include "AutopoweroffState.h"
-#include "IOKState.h"
-#include "IOKCommands.h"
 #include "OmmiKomm.h"
 #include "help/HelpState.h"
+#include "ICommands.h"
+#include "IState.h"
+#include "RestartState.h"
 #include "settings/Settings.h"
 #include "settings/SettingsState.h"
 #include "textfield/OmmiKommTextfield.h"
