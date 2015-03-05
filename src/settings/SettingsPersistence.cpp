@@ -49,6 +49,7 @@ const char* SettingsPersistence::ROOTNODENAME = "ommikomm";
 const char* SettingsPersistence::CONTRASTNODENAME = "contrast";
 const char* SettingsPersistence::FONTNODENAME = "font";
 const char* SettingsPersistence::LINECOUNTNODENAME = "linecount";
+const char* SettingsPersistence::PINNODENAME = "pin";
 
 
 void SettingsPersistence::write(std::string filename) {
@@ -72,6 +73,9 @@ void SettingsPersistence::write(std::string filename) {
 	xmlpp::Element *linecountNode = rootNode->add_child(LINECOUNTNODENAME);
 	linecountNode->add_child_text(linecount_value.str());
 
+	xmlpp::Element *pinNode = rootNode->add_child(PINNODENAME);
+	pinNode->add_child_text(config->getPIN());
+
 	doc.write_to_file(filename);
 }
 
@@ -92,6 +96,23 @@ int getIntValue(xmlpp::Node *rootNode, const Glib::ustring &nodeName) {
 	}
 }
 
+std::string getStrValue(xmlpp::Node *rootNode, const Glib::ustring &nodeName) {
+	xmlpp::Element *elementNode =
+			dynamic_cast<xmlpp::Element*>(rootNode->get_first_child(nodeName));
+
+	if (elementNode && elementNode->has_child_text()) {
+		std::stringstream s;
+		std::string result;
+
+		s << elementNode->get_child_text()->get_content();
+		s >> result;
+		return result;
+	} else {
+		std::cerr << "Configuration node '" << nodeName << "' not found!";
+		return "";
+	}
+}
+
 void SettingsPersistence::read(std::string filename) {
 	if (fileExists(filename)) {
 		xmlpp::DomParser parser;
@@ -107,6 +128,7 @@ void SettingsPersistence::read(std::string filename) {
 				config->setContrastIndex(getIntValue(rootNode, CONTRASTNODENAME));
 				config->setFontIndex(getIntValue(rootNode, FONTNODENAME));
 				config->setLinecountIntdex(getIntValue(rootNode, LINECOUNTNODENAME));
+				config->setPIN(getStrValue(rootNode, PINNODENAME));
 			} else {
 				std::cerr << "Root node '" << ROOTNODENAME << "' not found!\n";
 			}

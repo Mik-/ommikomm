@@ -34,12 +34,14 @@
 
 #include <string>
 #include "TypingState.h"
+#include "PINInputState.h"
 
 TypingState::TypingState(ICommands *Commands, int lines,
-		int idleUntilHelpScreen) {
+		int idleUntilHelpScreen, ISettings *Settings) {
 	this->Commands = Commands;
 	this->lines = lines;
 	this->idleUntilHelpScreen = idleUntilHelpScreen;
+	this->Settings = Settings;
 }
 
 TypingState::~TypingState() {
@@ -58,7 +60,14 @@ int TypingState::handleKey(int key) {
 		return (1);
 	}
 	if (key == FL_F + 10) {
-		Commands->setNewState(Commands->getConfigState());
+		if (Settings->getPIN().empty()) {
+			Commands->setNewState(Commands->getConfigState());
+		} else {
+			PINInputState *pinInputState =  new PINInputState(Commands, Settings,
+								Commands->getConfigState(), Commands->getTypingState());
+			Commands->setNewState(pinInputState);
+		}
+
 		return (1);
 	}
 	if (key == FL_Escape or key == FL_F + 5) {

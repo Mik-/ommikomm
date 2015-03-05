@@ -110,6 +110,7 @@ am_check_ommikomm_OBJECTS =  \
 	tests/check_ommikomm-mock_config.$(OBJEXT) \
 	src/check_ommikomm-TypingState.$(OBJEXT) \
 	src/check_ommikomm-RestartState.$(OBJEXT) \
+	src/check_ommikomm-PINInputState.$(OBJEXT) \
 	src/settings/check_ommikomm-SettingsState.$(OBJEXT) \
 	src/settings/check_ommikomm-Settings.$(OBJEXT) \
 	src/settings/check_ommikomm-SettingsPersistence.$(OBJEXT) \
@@ -121,6 +122,7 @@ check_ommikomm_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am_ommikomm_OBJECTS = src/ommikomm-main.$(OBJEXT) \
 	src/ommikomm-TypingState.$(OBJEXT) \
 	src/ommikomm-RestartState.$(OBJEXT) \
+	src/ommikomm-PINInputState.$(OBJEXT) \
 	src/settings/ommikomm-SettingsState.$(OBJEXT) \
 	src/settings/ommikomm-Settings.$(OBJEXT) \
 	src/settings/ommikomm-SettingsPersistence.$(OBJEXT) \
@@ -574,10 +576,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/RestartState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/RestartState.cpp src/PINInputState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
-check_ommikomm_SOURCES = tests/check_ommikomm.cpp tests/mock_config.cpp src/TypingState.cpp src/RestartState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+check_ommikomm_SOURCES = tests/check_ommikomm.cpp tests/mock_config.cpp src/TypingState.cpp src/RestartState.cpp src/PINInputState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 check_ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 check_ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS) 
 SUBDIRS = . po
@@ -702,6 +704,8 @@ src/check_ommikomm-TypingState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/check_ommikomm-RestartState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/check_ommikomm-PINInputState.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 src/settings/$(am__dirstamp):
 	@$(MKDIR_P) src/settings
 	@: > src/settings/$(am__dirstamp)
@@ -744,6 +748,8 @@ src/ommikomm-TypingState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ommikomm-RestartState.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/ommikomm-PINInputState.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 src/settings/ommikomm-SettingsState.$(OBJEXT):  \
 	src/settings/$(am__dirstamp) \
 	src/settings/$(DEPDIR)/$(am__dirstamp)
@@ -774,8 +780,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/check_ommikomm-PINInputState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/check_ommikomm-RestartState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/check_ommikomm-TypingState.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-PINInputState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-RestartState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-TypingState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ommikomm-main.Po@am__quote@
@@ -863,6 +871,20 @@ src/check_ommikomm-RestartState.obj: src/RestartState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RestartState.cpp' object='src/check_ommikomm-RestartState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/check_ommikomm-RestartState.obj `if test -f 'src/RestartState.cpp'; then $(CYGPATH_W) 'src/RestartState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RestartState.cpp'; fi`
+
+src/check_ommikomm-PINInputState.o: src/PINInputState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/check_ommikomm-PINInputState.o -MD -MP -MF src/$(DEPDIR)/check_ommikomm-PINInputState.Tpo -c -o src/check_ommikomm-PINInputState.o `test -f 'src/PINInputState.cpp' || echo '$(srcdir)/'`src/PINInputState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/check_ommikomm-PINInputState.Tpo src/$(DEPDIR)/check_ommikomm-PINInputState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/PINInputState.cpp' object='src/check_ommikomm-PINInputState.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/check_ommikomm-PINInputState.o `test -f 'src/PINInputState.cpp' || echo '$(srcdir)/'`src/PINInputState.cpp
+
+src/check_ommikomm-PINInputState.obj: src/PINInputState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/check_ommikomm-PINInputState.obj -MD -MP -MF src/$(DEPDIR)/check_ommikomm-PINInputState.Tpo -c -o src/check_ommikomm-PINInputState.obj `if test -f 'src/PINInputState.cpp'; then $(CYGPATH_W) 'src/PINInputState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/PINInputState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/check_ommikomm-PINInputState.Tpo src/$(DEPDIR)/check_ommikomm-PINInputState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/PINInputState.cpp' object='src/check_ommikomm-PINInputState.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/check_ommikomm-PINInputState.obj `if test -f 'src/PINInputState.cpp'; then $(CYGPATH_W) 'src/PINInputState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/PINInputState.cpp'; fi`
 
 src/settings/check_ommikomm-SettingsState.o: src/settings/SettingsState.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(check_ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/check_ommikomm-SettingsState.o -MD -MP -MF src/settings/$(DEPDIR)/check_ommikomm-SettingsState.Tpo -c -o src/settings/check_ommikomm-SettingsState.o `test -f 'src/settings/SettingsState.cpp' || echo '$(srcdir)/'`src/settings/SettingsState.cpp
@@ -975,6 +997,20 @@ src/ommikomm-RestartState.obj: src/RestartState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RestartState.cpp' object='src/ommikomm-RestartState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-RestartState.obj `if test -f 'src/RestartState.cpp'; then $(CYGPATH_W) 'src/RestartState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RestartState.cpp'; fi`
+
+src/ommikomm-PINInputState.o: src/PINInputState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-PINInputState.o -MD -MP -MF src/$(DEPDIR)/ommikomm-PINInputState.Tpo -c -o src/ommikomm-PINInputState.o `test -f 'src/PINInputState.cpp' || echo '$(srcdir)/'`src/PINInputState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-PINInputState.Tpo src/$(DEPDIR)/ommikomm-PINInputState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/PINInputState.cpp' object='src/ommikomm-PINInputState.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-PINInputState.o `test -f 'src/PINInputState.cpp' || echo '$(srcdir)/'`src/PINInputState.cpp
+
+src/ommikomm-PINInputState.obj: src/PINInputState.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ommikomm-PINInputState.obj -MD -MP -MF src/$(DEPDIR)/ommikomm-PINInputState.Tpo -c -o src/ommikomm-PINInputState.obj `if test -f 'src/PINInputState.cpp'; then $(CYGPATH_W) 'src/PINInputState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/PINInputState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ommikomm-PINInputState.Tpo src/$(DEPDIR)/ommikomm-PINInputState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/PINInputState.cpp' object='src/ommikomm-PINInputState.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ommikomm-PINInputState.obj `if test -f 'src/PINInputState.cpp'; then $(CYGPATH_W) 'src/PINInputState.cpp'; else $(CYGPATH_W) '$(srcdir)/src/PINInputState.cpp'; fi`
 
 src/settings/ommikomm-SettingsState.o: src/settings/SettingsState.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ommikomm_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/settings/ommikomm-SettingsState.o -MD -MP -MF src/settings/$(DEPDIR)/ommikomm-SettingsState.Tpo -c -o src/settings/ommikomm-SettingsState.o `test -f 'src/settings/SettingsState.cpp' || echo '$(srcdir)/'`src/settings/SettingsState.cpp

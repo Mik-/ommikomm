@@ -51,7 +51,8 @@
 #include "../settings/SettingsPersistence.h"
 #include "../settings/SettingsState.h"
 #include "../TypingState.h"
-
+#include "../TypingState.h"
+#include "../PINInputState.h"
 
 OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) :
   Fl_Multiline_Input(X, Y, W, H, L)
@@ -69,7 +70,7 @@ OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) 
 
   // Create the state objects
   helpState = new HelpState(this, WAITFORHELP);
-  typingState = new TypingState(this, config->getLinecount(), IDLEUNTILHELP);
+  typingState = new TypingState(this, config->getLinecount(), IDLEUNTILHELP, config);
   restartState = new RestartState(this, WAITFORHELP);
   configState = new SettingsState(this, config);
 

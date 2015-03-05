@@ -5,6 +5,8 @@
  *      Author: michael
  */
 
+#include <string>
+
 #include "../src/settings/ISettings.h"
 
 class mock_Settings : public ISettings {
@@ -12,6 +14,7 @@ class mock_Settings : public ISettings {
         int contrast;
         int font;
         int linecount;
+        std::string pin;
     public:
 		mock_Settings() {
 			contrast = 0;
@@ -29,6 +32,8 @@ class mock_Settings : public ISettings {
         virtual void toggleLinecount() { this->linecount++; };
         virtual int getLinecountIndex() { return this->linecount; };
         virtual void setLinecountIntdex(int linecount) { this->linecount = linecount; };
+        virtual std::string getPIN() { return this->pin; };
+        virtual void setPIN(std::string pin) { this->pin = pin; };
     };
 
 

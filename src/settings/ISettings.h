@@ -35,6 +35,7 @@
 #ifndef ISETTINGS_H
 #define ISETTINGS_H
 
+#include <string>
 
 class ISettings
 {
@@ -48,6 +49,8 @@ class ISettings
         virtual void toggleLinecount() = 0;
         virtual int getLinecountIndex() = 0;
         virtual void setLinecountIntdex(int linecount) = 0;
+        virtual std::string getPIN() = 0;
+        virtual void setPIN(std::string pin) = 0;
 };
 
 #endif // ISETTINGS_H

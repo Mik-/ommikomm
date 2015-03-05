@@ -37,11 +37,13 @@
 
 #include "ICommands.h"
 #include "IState.h"
+#include "settings/ISettings.h"
 
 class TypingState : public IState
 {
     public:
-        TypingState(ICommands *Commands, int lines, int idleUntilHelpScreen);
+        TypingState(ICommands *Commands, int lines, int idleUntilHelpScreen,
+        	ISettings *Settings);
         virtual ~TypingState();
 
         void setLines(int lines);
@@ -51,6 +53,7 @@ class TypingState : public IState
         virtual void tick(void);
     private:
         ICommands *Commands;
+        ISettings *Settings;
         int lines;
         int idleUntilHelpScreen;
         int ticks;

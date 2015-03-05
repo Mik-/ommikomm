@@ -65,6 +65,16 @@ int SettingsState::handleKey(int key) {
         Config->toggleLinecount();
         return(1);
     }
+    if (key == FL_F+6) {
+    	if (Config->getPIN().empty()) {
+
+    	} else {
+    	  std::string emptyStr;
+    	  emptyStr.clear();
+    	  Config->setPIN(emptyStr);
+    	}
+        return(1);
+    }
 
     // write changes to config file
     SettingsPersistence configWriter(Config);
@@ -88,6 +98,13 @@ void SettingsState::enterState(void) {
     menuText << "F3 - " << _("Contrast") << ": " << Config->getContrastIndex() + 1 << "\n";
     menuText << "F4 - " << _("Typeface") << ": " << Config->getFontIndex() + 1 << "\n";
     menuText << "F5 - " << _("Number of lines") << ": " << Config->getLinecountIndex() + 1 << "\n";
+    menuText << "F6 - " << _("PIN for settings") << ": ";
+    if (Config->getPIN().empty()) {
+    	menuText << _("none");
+    } else {
+    	menuText << "****";
+    }
+    menuText << "\n";
 
     menuText << "\n" << _("Press space bar to go back");
 

@@ -57,6 +57,7 @@ class SettingsPersistence
 		static const char* CONTRASTNODENAME;
 		static const char* FONTNODENAME;
 		static const char* LINECOUNTNODENAME;
+		static const char* PINNODENAME;
 
     private:
         ISettings *config;

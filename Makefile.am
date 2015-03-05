@@ -1,11 +1,11 @@
 bin_PROGRAMS = ommikomm
-ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/RestartState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+ommikomm_SOURCES = src/main.cpp src/TypingState.cpp src/RestartState.cpp src/PINInputState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS)
 
 TESTS = check_ommikomm
 check_PROGRAMS = check_ommikomm
-check_ommikomm_SOURCES = tests/check_ommikomm.cpp tests/mock_config.cpp src/TypingState.cpp src/RestartState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
+check_ommikomm_SOURCES = tests/check_ommikomm.cpp tests/mock_config.cpp src/TypingState.cpp src/RestartState.cpp src/PINInputState.cpp src/settings/SettingsState.cpp src/settings/Settings.cpp src/settings/SettingsPersistence.cpp src/help/HelpState.cpp src/textfield/OmmiKommTextfield.cpp
 check_ommikomm_CPPFLAGS = $(LIBXMLXX_CFLAGS)
 check_ommikomm_LDADD = -lfltk $(LIBXMLXX_LIBS) 
 

@@ -46,6 +46,7 @@
 #include "../help/HelpState.h"
 #include "../settings/Settings.h"
 #include "../settings/SettingsState.h"
+#include "../PINInputState.h"
 
 class OmmiKommTextfield : public Fl_Multiline_Input, public ICommands, public ISettingsChange {
     IState *currentState;

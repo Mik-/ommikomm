@@ -56,6 +56,7 @@ class OKConfigPersistentTest : public CxxTest::TestSuite {
 			TSM_ASSERT_EQUALS("contrast should be 1", 1, config->getContrastIndex());
 			TSM_ASSERT_EQUALS("font should be 2", 2, config->getFontIndex());
 			TSM_ASSERT_EQUALS("line count should be 3", 3, config->getLinecountIndex());
+			TSM_ASSERT_EQUALS("pin should be 1234", "1234", config->getPIN().c_str());
 		}
 
 		void test_read2() {
@@ -66,6 +67,7 @@ class OKConfigPersistentTest : public CxxTest::TestSuite {
 			TSM_ASSERT_EQUALS("contrast should be 0", 0, config->getContrastIndex());
 			TSM_ASSERT_EQUALS("font should be 0", 0, config->getFontIndex());
 			TSM_ASSERT_EQUALS("line count should be 0", 0, config->getLinecountIndex());
+			TSM_ASSERT_EQUALS("pin should be empty", "", config->getPIN().c_str());
 		}
 
 		void test_write() {
@@ -74,6 +76,7 @@ class OKConfigPersistentTest : public CxxTest::TestSuite {
 			config->setContrastIndex(1);
 			config->setFontIndex(2);
 			config->setLinecountIntdex(3);
+			config->setPIN("1234");
 
 			configPersister->write(filename);
 
@@ -82,6 +85,7 @@ class OKConfigPersistentTest : public CxxTest::TestSuite {
 			config->setContrastIndex(2);
 			config->setFontIndex(3);
 			config->setLinecountIntdex(4);
+			config->setPIN("4321");
 
 			configPersister->write(filename);
 			TSM_ASSERT("second write", equalFiles(TEMPCONFIGFILENAME, "./tests/test_data/config3.xml"));

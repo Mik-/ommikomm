@@ -36,6 +36,7 @@
 #define SETTINGS_H
 
 #include <FL/Enumerations.H>
+#include <string>
 
 #include "../settings/ISettings.h"
 #include "../settings/SettingValues.h"
@@ -63,11 +64,15 @@ class Settings : public ISettings {
         virtual int getLinecountIndex();
         virtual void setLinecountIntdex(int linecount);
         int getLinecount();
+        virtual std::string getPIN();
+        virtual void setPIN(std::string pin);
+
     protected:
     private:
         int contrast;
         int font;
         int linecount;
+        std::string pin;
         ISettingsChange *changeCallback;
 };
 

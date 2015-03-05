@@ -114,3 +114,11 @@ void Settings::setLinecountIntdex(int linecount)
 {
     this->linecount = linecount;
 }
+
+std::string Settings::getPIN() {
+	return this->pin;
+}
+
+void Settings::setPIN(std::string pin) {
+	this->pin = pin;
+}
