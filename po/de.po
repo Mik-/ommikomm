@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ommikomm 2.0\n"
 "Report-Msgid-Bugs-To: michael@neuendorf-online.de\n"
-"POT-Creation-Date: 2015-02-16 20:46+0100\n"
-"PO-Revision-Date: 2015-02-16 20:48+0100\n"
+"POT-Creation-Date: 2015-03-06 22:35+0100\n"
+"PO-Revision-Date: 2015-03-06 22:36+0100\n"
 "Last-Translator: Michael Neuendorf <michael@neuendorf-online.de>\n"
 "Language-Team: German <michael@neuendorf-online.de>\n"
 "Language: de\n"
@@ -25,7 +25,7 @@ msgstr "Eingabe löschen"
 msgid "This help screen"
 msgstr "Diese Hilfeseite"
 
-#: src/help/HelpState.cpp:69 src/settings/SettingsState.cpp:86
+#: src/help/HelpState.cpp:69 src/settings/SettingsState.cpp:101
 msgid "Setup"
 msgstr "Einstellungen"
 
@@ -33,7 +33,7 @@ msgstr "Einstellungen"
 msgid "Restart OmmiKomm"
 msgstr "OmmiKomm neu starten"
 
-#: src/help/HelpState.cpp:71 src/settings/SettingsState.cpp:92
+#: src/help/HelpState.cpp:71 src/settings/SettingsState.cpp:114
 msgid "Press space bar to go back"
 msgstr "Leertaste für Zurück"
 
@@ -41,17 +41,37 @@ msgstr "Leertaste für Zurück"
 msgid "OmmiKomm will now restart."
 msgstr "OmmiKomm wird jetzt neu gestartet."
 
-#: src/settings/SettingsState.cpp:88
+#: src/settings/SettingsState.cpp:71 src/TypingState.cpp:68
+msgid "Enter PIN"
+msgstr "PIN eingeben"
+
+#: src/settings/SettingsState.cpp:103
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: src/settings/SettingsState.cpp:89
+#: src/settings/SettingsState.cpp:104
 msgid "Typeface"
 msgstr "Schriftart"
 
-#: src/settings/SettingsState.cpp:90
+#: src/settings/SettingsState.cpp:105
 msgid "Number of lines"
 msgstr "Zeilenzahl"
+
+#: src/settings/SettingsState.cpp:106
+msgid "PIN for settings"
+msgstr "PIN für Einstellungen"
+
+#: src/settings/SettingsState.cpp:108
+msgid "none"
+msgstr "ohne"
+
+#: src/settings/SettingsState.cpp:128
+msgid "Reenter PIN"
+msgstr "PIN nochmal eingeben"
+
+#: src/TypingState.cpp:111
+msgid "Wrong PIN!"
+msgstr "Falsche PIN!"
 
 #~ msgid "Character case"
 #~ msgstr "Groß-/Kleinschreibung"

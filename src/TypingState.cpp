@@ -32,11 +32,13 @@
  erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
 
-#include <string>
-#include <libintl.h>
-#include "OmmiKomm.h"
 #include "TypingState.h"
-#include "PINInputState.h"
+
+#include <FL/Enumerations.H>
+#include <FL/Fl_Multiline_Input.H>
+#include <sstream>
+
+#include "OmmiKomm.h"
 
 TypingState::TypingState(ICommands *Commands, int lines,
 		int idleUntilHelpScreen, ISettings *Settings) {
@@ -57,25 +59,31 @@ void TypingState::setLines(int lines) {
 int TypingState::handleKey(int key) {
 	ticks = 0;
 
+	// on key F1, enter the help state
 	if (key == FL_F + 1) {
 		Commands->setNewState(Commands->getHelpState());
 		return (1);
 	}
+	// on key F10, enter the settings state, if now PIN is set
+	// if a PIN is set, create a new PIN input state and register "this" as
+	// callback interface, to receive the result of the input
 	if (key == FL_F + 10) {
 		if (Settings->getPIN().empty()) {
 			Commands->setNewState(Commands->getConfigState());
 		} else {
-			std::string caption = "Enter PIN";
-			pinInputState =  new PINInputState(Commands, this, caption);
+			std::string caption = _("Enter PIN");
+			pinInputState = new PINInputState(Commands, this, caption);
 			Commands->setNewState(pinInputState);
 		}
 
 		return (1);
 	}
+	// on key ESCAPE or F5, clear the current text
 	if (key == FL_Escape or key == FL_F + 5) {
 		Commands->clear_all();
 		return (1);
 	}
+	// on key F12, enter the restart state
 	if (key == FL_F + 12) {
 		Commands->setNewState(Commands->getRestartState());
 		return (1);
@@ -84,31 +92,38 @@ int TypingState::handleKey(int key) {
 	return (0);
 }
 
+// if this state entered, set the line count, which also clears the input
 void TypingState::enterState(void) {
 	ticks = 0;
 	Commands->setTextLines(lines);
 }
 
+// handle the ticks, to enter the help state after the given time
 void TypingState::tick(void) {
 	ticks++;
-    if (ticks >= idleUntilHelpScreen) {
-        Commands->setNewState(Commands->getHelpState());
-    }
+	if (ticks >= idleUntilHelpScreen) {
+		Commands->setNewState(Commands->getHelpState());
+	}
 }
 
+// handle the PIN result, which is gathered by the PIN input state
 void TypingState::enteredPIN(std::string PIN) {
+	// delete the class, which was created in the handle key method
 	delete pinInputState;
 
+	// compared the entered PIN with the PIN in the settings
 	if (PIN == Settings->getPIN()) {
+		// PIN is equal, change to settings state
 		Commands->setNewState(Commands->getConfigState());
 	} else {
-	    Commands->setNewState(Commands->getTypingState());
+		// PIN is wrong, change to typing state and show an error message
+		Commands->setNewState(Commands->getTypingState());
 
-	    std::ostringstream menuText;
+		std::ostringstream menuText;
 
-	    Commands->clear_all();
+		Commands->clear_all();
 
-	    menuText << _("Wrong PIN!");
-	    Commands->getInput()->value(menuText.str().c_str());
+		menuText << _("Wrong PIN!");
+		Commands->getInput()->value(menuText.str().c_str());
 	}
 }

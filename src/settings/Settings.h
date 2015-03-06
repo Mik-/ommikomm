@@ -38,42 +38,42 @@
 #include <FL/Enumerations.H>
 #include <string>
 
-#include "../settings/ISettings.h"
-#include "../settings/SettingValues.h"
+#include "ISettings.h"
+#include "SettingValues.h"
 
 class ISettingsChange {
-    public:
-        virtual void configChange() = 0;
+	public:
+		virtual void configChange() = 0;
 };
 
-class Settings : public ISettings {
-    public:
-        Settings(ISettingsChange *changeCallback);
-        virtual ~Settings();
+class Settings: public ISettings {
+	public:
+		Settings(ISettingsChange *changeCallback);
+		virtual ~Settings();
 
-        virtual void toggleContrast(void);
-        virtual int getContrastIndex();
-        virtual void setContrastIndex(int contrast);
-        int getBackColor(void);
-        int getTextColor(void);
-        virtual void toggleFont(void);
-        virtual int getFontIndex();
-        virtual void setFontIndex(int font);
-        int getFont(void);
-        virtual void toggleLinecount();
-        virtual int getLinecountIndex();
-        virtual void setLinecountIntdex(int linecount);
-        int getLinecount();
-        virtual std::string getPIN();
-        virtual void setPIN(std::string pin);
+		virtual void toggleContrast(void);
+		virtual int getContrastIndex();
+		virtual void setContrastIndex(int contrast);
+		int getBackColor(void);
+		int getTextColor(void);
+		virtual void toggleFont(void);
+		virtual int getFontIndex();
+		virtual void setFontIndex(int font);
+		int getFont(void);
+		virtual void toggleLinecount();
+		virtual int getLinecountIndex();
+		virtual void setLinecountIntdex(int linecount);
+		int getLinecount();
+		virtual std::string getPIN();
+		virtual void setPIN(std::string pin);
 
-    protected:
-    private:
-        int contrast;
-        int font;
-        int linecount;
-        std::string pin;
-        ISettingsChange *changeCallback;
+	protected:
+	private:
+		int contrast;
+		int font;
+		int linecount;
+		std::string pin;
+		ISettingsChange *changeCallback;
 };
 
 #endif // SETTINGS_H

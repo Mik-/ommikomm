@@ -32,25 +32,25 @@
  erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
 
-#include "../settings/SettingsPersistence.h"
+#include "SettingsPersistence.h"
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <cstdlib>
-#include <unistd.h>
-#include <sys/types.h>
+#include <glibmm/ustring.h>
+#include <libxml++/document.h>
+#include <libxml++/nodes/element.h>
+#include <libxml++/nodes/textnode.h>
+#include <libxml++/parsers/domparser.h>
 #include <pwd.h>
-#include <libxml++/libxml++.h>
-
+#include <unistd.h>
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <fstream>
 
 const char* SettingsPersistence::ROOTNODENAME = "ommikomm";
 const char* SettingsPersistence::CONTRASTNODENAME = "contrast";
 const char* SettingsPersistence::FONTNODENAME = "font";
 const char* SettingsPersistence::LINECOUNTNODENAME = "linecount";
 const char* SettingsPersistence::PINNODENAME = "pin";
-
 
 void SettingsPersistence::write(std::string filename) {
 
@@ -124,10 +124,12 @@ void SettingsPersistence::read(std::string filename) {
 			xmlpp::Node *rootNode;
 			rootNode = doc->get_root_node();
 
-			if (rootNode &&  rootNode->get_name().compare(ROOTNODENAME) == 0) {
-				config->setContrastIndex(getIntValue(rootNode, CONTRASTNODENAME));
+			if (rootNode && rootNode->get_name().compare(ROOTNODENAME) == 0) {
+				config->setContrastIndex(
+						getIntValue(rootNode, CONTRASTNODENAME));
 				config->setFontIndex(getIntValue(rootNode, FONTNODENAME));
-				config->setLinecountIntdex(getIntValue(rootNode, LINECOUNTNODENAME));
+				config->setLinecountIntdex(
+						getIntValue(rootNode, LINECOUNTNODENAME));
 				config->setPIN(getStrValue(rootNode, PINNODENAME));
 			} else {
 				std::cerr << "Root node '" << ROOTNODENAME << "' not found!\n";

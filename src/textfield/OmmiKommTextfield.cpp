@@ -32,120 +32,109 @@
  erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
 
-#include <FL/Fl.H>
-#include <FL/Enumerations.H>
-#include <FL/Fl_Window.H>
-#include <FL/Fl_Multiline_Input.H>
-
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-
-#include "../ICommands.h"
-#include "../OmmiKomm.h"
-#include "../help/HelpState.h"
 #include "OmmiKommTextfield.h"
 
-#include "../RestartState.h"
-#include "../settings/Settings.h"
+#include <FL/Fl_Input_.H>
+#include <FL/Fl_Widget.H>
+#include <cstdlib>
+#include <sstream>
+#include <string>
+
+#include "../OmmiKomm.h"
 #include "../settings/SettingsPersistence.h"
-#include "../settings/SettingsState.h"
-#include "../TypingState.h"
-#include "../TypingState.h"
-#include "../PINInputState.h"
 
 OmmiKommTextfield::OmmiKommTextfield(int X, int Y, int W, int H, const char* L) :
-  Fl_Multiline_Input(X, Y, W, H, L)
-{
-  type (FL_MULTILINE_INPUT_WRAP);
+		Fl_Multiline_Input(X, Y, W, H, L) {
+	type(FL_MULTILINE_INPUT_WRAP);
 
-  // Create the settings object and the reader for the settings
-  config = new Settings(this);
-  SettingsPersistence settingsReader(config);
+	// Create the settings object and the reader for the settings
+	config = new Settings(this);
+	SettingsPersistence settingsReader(config);
 
-  // Build the settings filename and read the settings file
-  std::stringstream configFilename;
-  configFilename << settingsReader.getHomeDir() << "/" << CONFIGFILENAME;
-  settingsReader.read(configFilename.str());
+	// Build the settings filename and read the settings file
+	std::stringstream configFilename;
+	configFilename << settingsReader.getHomeDir() << "/" << CONFIGFILENAME;
+	settingsReader.read(configFilename.str());
 
-  // Create the state objects
-  helpState = new HelpState(this, WAITFORHELP);
-  typingState = new TypingState(this, config->getLinecount(), IDLEUNTILHELP, config);
-  restartState = new RestartState(this, WAITFORHELP);
-  configState = new SettingsState(this, config);
+	// Create the state objects
+	helpState = new HelpState(this, WAITFORHELP);
+	typingState = new TypingState(this, config->getLinecount(), IDLEUNTILHELP,
+			config);
+	restartState = new RestartState(this, WAITFORHELP);
+	configState = new SettingsState(this, config);
 
-  currentState = helpState;
+	currentState = helpState;
 }
 
 void OmmiKommTextfield::setNewState(IState *newState) {
-    currentState = newState;
-    currentState->enterState();
+	currentState = newState;
+	currentState->enterState();
 }
 
 IState *OmmiKommTextfield::getHelpState(void) {
-    return (helpState);
+	return (helpState);
 }
 
 int OmmiKommTextfield::handle(int e) {
-  switch(e) {
-    case FL_KEYDOWN : {
-        int key = Fl::event_key();
+	switch (e) {
+		case FL_KEYDOWN: {
+			int key = Fl::event_key();
 
-        int ret = currentState->handleKey(key);
+			int ret = currentState->handleKey(key);
 
-        if (ret > 0) {
-            return (ret);
-        }
-    }
-  }
+			if (ret > 0) {
+				return (ret);
+			}
+		}
+	}
 
-  return (Fl_Multiline_Input::handle(e));
+	return (Fl_Multiline_Input::handle(e));
 }
 
 void OmmiKommTextfield::tick(void) {
-    currentState->tick();
+	currentState->tick();
 }
 
 void OmmiKommTextfield::clear_all() {
-    static_value("");
+	static_value("");
 }
 
 void OmmiKommTextfield::restart() {
-    std::string command = "sudo restart";
-    #ifndef DEBUG
-    int sysres = system(command.c_str());
-    #endif
+	std::string command = "sudo restart";
+#ifndef DEBUG
+	int sysres = system(command.c_str());
+#endif
 
-    exit(0);
+	exit(0);
 }
 
 Fl_Multiline_Input *OmmiKommTextfield::getInput(void) {
-    return (this);
+	return (this);
 }
 
 void OmmiKommTextfield::setTextLines(int lines) {
-    textsize(h() / (lines * 1.2));
+	textsize(h() / (lines * 1.2));
 
-    clear_all();
+	clear_all();
 }
 
 IState *OmmiKommTextfield::getTypingState(void) {
-    return (typingState);
+	return (typingState);
 }
 
 IState *OmmiKommTextfield::getRestartState(void) {
-    return (restartState);
+	return (restartState);
 }
 
 IState *OmmiKommTextfield::getConfigState(void) {
-    return (configState);
+	return (configState);
 }
 
 void OmmiKommTextfield::configChange() {
-    textfont(config->getFont());
-    color(config->getBackColor());
-    textcolor(config->getTextColor());
-    typingState->setLines(config->getLinecount());
+	textfont(config->getFont());
+	color(config->getBackColor());
+	textcolor(config->getTextColor());
+	typingState->setLines(config->getLinecount());
 
-    currentState->enterState();
+	currentState->enterState();
 }

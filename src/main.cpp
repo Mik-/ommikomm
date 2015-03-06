@@ -33,39 +33,33 @@
  */
 
 #include <FL/Fl.H>
-#include <FL/Enumerations.H>
 #include <FL/Fl_Window.H>
-#include <FL/Fl_Multiline_Input.H>
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
 #include <libintl.h>
+#include <clocale>
 
 #include "config.h"
 #include "OmmiKomm.h"
-#include "help/HelpState.h"
-#include "ICommands.h"
-#include "IState.h"
-#include "RestartState.h"
-#include "settings/Settings.h"
-#include "settings/SettingsState.h"
 #include "textfield/OmmiKommTextfield.h"
-#include "TypingState.h"
 
 using namespace std;
 
+// the input field as global variable
 OmmiKommTextfield *input;
 
+// this function is registered by the FLTK framework an will be called every second
 void timercallback(void *data) {
+	// call the tick method of the input which will call the tick method of the active state
     input->tick();
     Fl::repeat_timeout(1.0, timercallback);
 }
 
 int main(int argc, char ** argv) {
-    setlocale(LC_ALL, "");
+    // Initialize the i18n
+	setlocale(LC_ALL, "");
     bindtextdomain(PACKAGE, LOCALEDIR);
     textdomain(PACKAGE);
 
+    // create a window and place the text field on it
     Fl_Window *window;
     window = new Fl_Window(Fl::w(), Fl::h());
     input = new OmmiKommTextfield(BORDERWIDTH, BORDERWIDTH, Fl::w() - 2 * BORDERWIDTH,
@@ -74,9 +68,12 @@ int main(int argc, char ** argv) {
     window->end();
     window->show(argc, argv);
 
+    // start the tick timer
     Fl::add_timeout(1.0, timercallback);
 
+    // set the initial state (the help screen)
     input->setNewState(input->getHelpState());
 
+    // run the app
     return (Fl::run());
 }

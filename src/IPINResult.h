@@ -10,6 +10,7 @@
 
 #include <string>
 
+// The result of a PIN input will be notified to this interface
 class IPINResult {
 	public:
 		virtual void enteredPIN(std::string PIN) = 0;

@@ -1,5 +1,6 @@
 ./src/help/HelpState.cpp
 ./src/main.cpp
+./src/PINInputState.cpp
 ./src/RestartState.cpp
 ./src/settings/Settings.cpp
 ./src/settings/SettingsPersistence.cpp

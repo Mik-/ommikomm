@@ -35,11 +35,16 @@
 #ifndef ISTATE_H
 #define ISTATE_H
 
+// Every state has some methods which are called from the multiline input
 class IState
 {
     public:
+		// handleKey is called, whenever a key is pressed
         virtual int handleKey(int key)  = 0;
+        // if the state was changed, this method of the new state is called
+        // for initialization
         virtual void enterState(void) = 0;
+        // every second, the tick method is called by the application
         virtual void tick(void) = 0;
 };
 

@@ -68,7 +68,7 @@ int SettingsState::handleKey(int key) {
     if (key == FL_F+6) {
     	if (Config->getPIN().empty()) {
     		this->enteredNewPIN.clear();
-    		std::string caption = "Enter PIN";
+    		std::string caption = _("Enter PIN");
     		pinInputState = new PINInputState(Commands, this, caption);
     		Commands->setNewState(pinInputState);
     	} else {
@@ -125,7 +125,7 @@ void SettingsState::enteredPIN(std::string PIN) {
 
 	if (enteredNewPIN.empty()) {
 		enteredNewPIN = PIN;
-		std::string caption = "Reenter PIN";
+		std::string caption = _("Reenter PIN");
 		pinInputState = new PINInputState(Commands, this, caption);
 		Commands->setNewState(pinInputState);
 	} else {

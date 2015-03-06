@@ -32,6 +32,8 @@
     erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
+#include <libintl.h>
+
 #ifdef DEBUG
     #define IDLEUNTILHELP 10
     #define WAITFORHELP 5
@@ -40,6 +42,7 @@
     #define WAITFORHELP 10
 #endif
 
+// The border width is set as border in pixels around the multiline input
 #define BORDERWIDTH 5
 
 #define _(String) gettext (String)
