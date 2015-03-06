@@ -35,7 +35,6 @@
 #ifndef ISTATE_H
 #define ISTATE_H
 
-
 class IState
 {
     public:

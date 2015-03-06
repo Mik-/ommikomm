@@ -6,17 +6,17 @@
  */
 
 #include <libintl.h>
+#include <string>
 #include <sstream>
 
 #include "OmmiKomm.h"
+#include "IPINResult.h"
 #include "PINInputState.h"
 
-PINInputState::PINInputState(ICommands* Commands, ISettings* Config, IState *PINOkState,
-		IState *PINWrongState) {
+PINInputState::PINInputState(ICommands *Commands, IPINResult *PINResult, std::string caption) {
 	this->Commands = Commands;
-	this->Config = Config;
-	this->PINOkState = PINOkState;
-	this->PINWrongState = PINWrongState;
+	this->PINResult = PINResult;
+	this->caption = caption;
 }
 
 PINInputState::~PINInputState() {
@@ -31,11 +31,7 @@ int PINInputState::handleKey(int key) {
 		Commands->getInput()->value(value.str().c_str());
 
 		if (enteredPIN.str().length() >= 4) {
-			if (enteredPIN.str() == Config->getPIN()) {
-				Commands->setNewState(this->PINOkState);
-			} else {
-				Commands->setNewState(this->PINWrongState);
-			}
+			PINResult->enteredPIN(enteredPIN.str());
 		}
 
 		return 1;
@@ -52,7 +48,7 @@ void PINInputState::enterState(void) {
     Commands->setTextLines(5);
     Commands->clear_all();
 
-    menuText << "\n\n" << _("Enter PIN") << ": ";
+    menuText << "\n\n" << _(caption.c_str()) << ": ";
 
     Commands->getInput()->value(menuText.str().c_str());
 }

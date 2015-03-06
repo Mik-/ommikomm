@@ -33,6 +33,8 @@
  */
 
 #include <string>
+#include <libintl.h>
+#include "OmmiKomm.h"
 #include "TypingState.h"
 #include "PINInputState.h"
 
@@ -63,8 +65,8 @@ int TypingState::handleKey(int key) {
 		if (Settings->getPIN().empty()) {
 			Commands->setNewState(Commands->getConfigState());
 		} else {
-			PINInputState *pinInputState =  new PINInputState(Commands, Settings,
-								Commands->getConfigState(), Commands->getTypingState());
+			std::string caption = "Enter PIN";
+			pinInputState =  new PINInputState(Commands, this, caption);
 			Commands->setNewState(pinInputState);
 		}
 
@@ -94,3 +96,19 @@ void TypingState::tick(void) {
     }
 }
 
+void TypingState::enteredPIN(std::string PIN) {
+	delete pinInputState;
+
+	if (PIN == Settings->getPIN()) {
+		Commands->setNewState(Commands->getConfigState());
+	} else {
+	    Commands->setNewState(Commands->getTypingState());
+
+	    std::ostringstream menuText;
+
+	    Commands->clear_all();
+
+	    menuText << _("Wrong PIN!");
+	    Commands->getInput()->value(menuText.str().c_str());
+	}
+}

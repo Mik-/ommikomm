@@ -35,11 +35,15 @@
 #ifndef TYPINGSTATE_H
 #define TYPINGSTATE_H
 
+#include <string>
+
 #include "ICommands.h"
 #include "IState.h"
+#include "IPINResult.h"
+#include "PINInputState.h"
 #include "settings/ISettings.h"
 
-class TypingState : public IState
+class TypingState : public IState, IPINResult
 {
     public:
         TypingState(ICommands *Commands, int lines, int idleUntilHelpScreen,
@@ -51,12 +55,14 @@ class TypingState : public IState
         virtual int handleKey(int key);
         virtual void enterState(void);
         virtual void tick(void);
+        virtual void enteredPIN(std::string PIN);
     private:
         ICommands *Commands;
         ISettings *Settings;
         int lines;
         int idleUntilHelpScreen;
         int ticks;
+        PINInputState *pinInputState;
 };
 
 #endif // TYPINGSTATE_H

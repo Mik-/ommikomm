@@ -35,12 +35,15 @@
 #ifndef SETTINGSSTATE_H
 #define SETTINGSSTATE_H
 
+#include <string>
+
 #include "../ICommands.h"
 #include "../IState.h"
 #include "../settings/ISettings.h"
+#include "../IPINResult.h"
+#include "../PINInputState.h"
 
-
-class SettingsState : public IState
+class SettingsState : public IState, IPINResult
 {
     public:
         SettingsState(ICommands *Commands, ISettings *Config);
@@ -49,9 +52,12 @@ class SettingsState : public IState
         virtual int handleKey(int key);
         virtual void enterState(void);
         virtual void tick(void);
+        virtual void enteredPIN(std::string PIN);
     private:
         ICommands *Commands;
         ISettings *Config;
+        PINInputState *pinInputState;
+        std::string enteredNewPIN;
 };
 
 #endif // SETTINGSSTATE_H

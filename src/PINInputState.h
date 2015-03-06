@@ -12,14 +12,12 @@
 #include <sstream>
 
 #include "ICommands.h"
-#include "IState.h"
-#include "settings/ISettings.h"
+#include "IPINResult.h"
 
 class PINInputState : public IState
 {
     public:
-		PINInputState(ICommands *Commands, ISettings *Config, IState *PINOkState,
-				IState *PINWrongState);
+		PINInputState(ICommands *Commands, IPINResult *PINResult, std::string caption);
         virtual ~PINInputState();
 
         std::string getEnteredPIN();
@@ -29,10 +27,9 @@ class PINInputState : public IState
         virtual void tick(void);
     private:
         ICommands *Commands;
-        ISettings *Config;
-        IState *PINOkState;
-        IState *PINWrongState;
+        IPINResult *PINResult;
         std::stringstream enteredPIN;
+        std::string caption;
 };
 
 #endif /* PININPUTSTATE_H_ */

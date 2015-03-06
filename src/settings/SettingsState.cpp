@@ -67,11 +67,16 @@ int SettingsState::handleKey(int key) {
     }
     if (key == FL_F+6) {
     	if (Config->getPIN().empty()) {
-
+    		this->enteredNewPIN.clear();
+    		std::string caption = "Enter PIN";
+    		pinInputState = new PINInputState(Commands, this, caption);
+    		Commands->setNewState(pinInputState);
     	} else {
     	  std::string emptyStr;
     	  emptyStr.clear();
     	  Config->setPIN(emptyStr);
+    	  // Set this as new state to refresh the screen
+    	  Commands->setNewState(this);
     	}
         return(1);
     }
@@ -115,3 +120,18 @@ void SettingsState::tick(void) {
     // nothing to do
 }
 
+void SettingsState::enteredPIN(std::string PIN) {
+	delete pinInputState;
+
+	if (enteredNewPIN.empty()) {
+		enteredNewPIN = PIN;
+		std::string caption = "Reenter PIN";
+		pinInputState = new PINInputState(Commands, this, caption);
+		Commands->setNewState(pinInputState);
+	} else {
+		if (enteredNewPIN == PIN) {
+			Config->setPIN(PIN);
+		}
+		Commands->setNewState(this);
+	}
+}
